@@ -1,0 +1,26 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="VALIDATION_NAME_REQUIRED" xml:space="preserve">
+        <value>Oops! O Nome é obrigatório.</value>
+    </data>
+    <data name="VALIDATION_EMAIL_REQUIRED" xml:space="preserve">
+        <value>Oops! O Email é obrigatório.</value>
+    </data>
+    <data name="VALIDATION_PASSWORD_REQUIRED" xml:space="preserve">
+        <value>Oops! A senha é obrigatória.</value>
+    </data>
+    <data name="VALIDATION_EMAIL_INVALID" xml:space="preserve">
+        <value>Oops! Seu Email não é valido.</value>
+    </data>
+</root>

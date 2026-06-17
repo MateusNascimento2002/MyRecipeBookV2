@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MyRecipeBook.Communication.Requests;
+using MyRecipeBook.Exception;
 
 namespace MyRecipeBook.Application.UseCases.User.Register;
 
@@ -9,21 +10,21 @@ public class RegisterUserAccountValidator : AbstractValidator<RequestRegisterUse
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .WithMessage("Name is required.");
+            .WithMessage(ResourceMessagesException.VALIDATION_NAME_REQUIRED);
 
         RuleFor(x => x.Email)
             .NotEmpty()
-            .WithMessage("Email is required.");
+            .WithMessage(ResourceMessagesException.VALIDATION_EMAIL_REQUIRED);
 
         RuleFor(x => x.Password)
             .NotEmpty()
-            .MinimumLength(8);
+            .WithMessage(ResourceMessagesException.VALIDATION_PASSWORD_REQUIRED);
 
         When(user => !string.IsNullOrEmpty(user.Email), () =>
         {
             RuleFor(x => x.Email) 
                 .EmailAddress()
-                .WithMessage("Invalid email format.");
+                .WithMessage(ResourceMessagesException.VALIDATION_EMAIL_INVALID);
         });
     }
 }
