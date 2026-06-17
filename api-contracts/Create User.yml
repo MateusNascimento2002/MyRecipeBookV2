@@ -1,0 +1,26 @@
+info:
+  name: Create User
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://localhost:7197/Users
+  headers:
+    - name: Accept-Language
+      value: en
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Mateus",
+        "email": "mateus@gmail.com",
+        "password": "12345678"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
