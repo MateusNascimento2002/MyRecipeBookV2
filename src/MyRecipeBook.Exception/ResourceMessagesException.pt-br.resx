@@ -23,4 +23,7 @@
     <data name="VALIDATION_EMAIL_INVALID" xml:space="preserve">
         <value>Oops! Seu Email não é valido.</value>
     </data>
+    <data name="UNKOWN_ERROR" xml:space="preserve">
+        <value>Oops! Ocorreu um erro desconhecido!</value>
+    </data>
 </root>

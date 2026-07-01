@@ -60,6 +60,15 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An unexpected error occurred. Please try again later..
+        /// </summary>
+        public static string UNKOWN_ERROR {
+            get {
+                return ResourceManager.GetString("UNKOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! Your Email is invalid.
         /// </summary>
         public static string VALIDATION_EMAIL_INVALID {
