@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using MyRecipeBook.API.Filters;
+using MyRecipeBook.Application.Extensions;
+using MyRecipeBook.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,19 +17,19 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         "en",
         "pt-BR"
     ];
-    
+
     options.SetDefaultCulture("en");
     options.AddSupportedCultures(supportedCultures);
     options.AddSupportedUICultures(supportedCultures);
-    options.RequestCultureProviders = [
+    options.RequestCultureProviders =
+    [
         new AcceptLanguageHeaderRequestCultureProvider()
     ];
 });
 
-builder.Services.AddMvc(options =>
-{
-    options.Filters.Add<ExceptionFilter>();
-});
+builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
+builder.Services.AddPasswordHasher();
+builder.Services.AddUseCases();
 
 var app = builder.Build();
 

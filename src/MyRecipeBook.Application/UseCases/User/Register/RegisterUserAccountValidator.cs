@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MyRecipeBook.Communication.Requests;
+using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
 
 namespace MyRecipeBook.Application.UseCases.User.Register;
@@ -20,7 +21,7 @@ public class RegisterUserAccountValidator : AbstractValidator<RequestRegisterUse
             .NotEmpty()
             .WithMessage(ResourceMessagesException.VALIDATION_PASSWORD_REQUIRED);
 
-        When(user => !string.IsNullOrEmpty(user.Email), () =>
+        When(user => user.Email.IsNotEmpty(), () =>
         {
             RuleFor(x => x.Email) 
                 .EmailAddress()

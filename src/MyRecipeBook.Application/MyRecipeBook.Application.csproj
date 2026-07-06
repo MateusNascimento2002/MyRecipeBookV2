@@ -7,13 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MyRecipeBook.Communication\MyRecipeBook.Communication.csproj" />
-      <ProjectReference Include="..\MyRecipeBook.Domain\MyRecipeBook.Domain.csproj" />
-      <ProjectReference Include="..\MyRecipeBook.Exception\MyRecipeBook.Exception.csproj" />
+        <ProjectReference Include="..\MyRecipeBook.Communication\MyRecipeBook.Communication.csproj"/>
+        <ProjectReference Include="..\MyRecipeBook.Domain\MyRecipeBook.Domain.csproj"/>
+        <ProjectReference Include="..\MyRecipeBook.Exception\MyRecipeBook.Exception.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.1.1" />
+        <PackageReference Include="FluentValidation" Version="12.1.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9"/>
     </ItemGroup>
 
 </Project>
