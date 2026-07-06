@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://localhost:7197/Users
+  url: https://localhost:5000/users
   headers:
     - name: Accept-Language
       value: en
@@ -13,7 +13,7 @@ http:
     type: json
     data: |-
       {
-        "name": "Mateus",
+        "name": "Mateus Nascimento",
         "email": "mateus@gmail.com",
         "password": "12345678"
       }
