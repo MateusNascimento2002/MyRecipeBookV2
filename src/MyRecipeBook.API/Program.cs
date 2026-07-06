@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using MyRecipeBook.API.Converters;
 using MyRecipeBook.API.Filters;
 using MyRecipeBook.Application.Extensions;
 using MyRecipeBook.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options
+            .JsonSerializerOptions
+            .Converters
+            .Add(new StringConverter());
+    });
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
@@ -28,6 +36,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 builder.Services.AddPasswordHasher();
 builder.Services.AddUseCases();
 
