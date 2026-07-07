@@ -41,6 +41,9 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddPasswordHasher();
 builder.Services.AddUseCases();
+builder.Services.AddRepositories();
+builder.Services.AddDbContext(builder.Configuration);
+builder.Services.AddUnitOfWork();
 
 var app = builder.Build();
 
