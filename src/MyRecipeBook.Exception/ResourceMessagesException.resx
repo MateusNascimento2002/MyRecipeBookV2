@@ -132,4 +132,7 @@
   <data name="UNKOWN_ERROR" xml:space="preserve">
     <value>An unexpected error occurred. Please try again later.</value>
   </data>
+  <data name="VALIDATION_EMAIL_ALREADY_EXISTS" xml:space="preserve">
+    <value>Oops! This email is already in use</value>
+  </data>
 </root>
