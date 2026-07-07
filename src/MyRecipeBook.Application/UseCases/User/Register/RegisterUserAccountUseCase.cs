@@ -1,5 +1,11 @@
-﻿using MyRecipeBook.Communication.Requests;
+﻿using FluentValidation.Results;
+using Mapster;
+using MyRecipeBook.Communication.Requests;
+using MyRecipeBook.Communication.Responses;
+using MyRecipeBook.Domain.Interfaces.Repositories.UnitOfWork;
+using MyRecipeBook.Domain.Interfaces.Repositories.Users;
 using MyRecipeBook.Domain.Security.PasswordHashing;
+using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
 using DomainUser = MyRecipeBook.Domain.Entities.User;
 
@@ -8,26 +14,51 @@ namespace MyRecipeBook.Application.UseCases.User.Register;
 public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
 {
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
+    private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterUserAccountUseCase(IPasswordHasher passwordHasher)
+    public RegisterUserAccountUseCase(
+        IPasswordHasher passwordHasher,
+        IUserWriteOnlyRepository userWriteOnlyRepository,
+        IUserReadOnlyRepository userReadOnlyRepository,
+        IUnitOfWork  unitOfWork)
     {
         _passwordHasher = passwordHasher;
+        _userWriteOnlyRepository = userWriteOnlyRepository;
+        _userReadOnlyRepository = userReadOnlyRepository;
+        _unitOfWork = unitOfWork;
     }
     
-    public void Execute(RequestRegisterUserAccountJson request)
+    public async Task<ResponseRegisterUserJson> Execute(RequestRegisterUserAccountJson request)
     {
-        ValidateAndThrowOnFailure(request);
+        await ValidateAndThrowOnFailure(request);
         
-        var password = _passwordHasher.HashPassword(request.Password);
+        var user = request.Adapt<DomainUser>();
         
-        var user = DomainUser.Create(request.Name, request.Email, password);
+        user.Password = _passwordHasher.HashPassword(request.Password);
+        
+        await _userWriteOnlyRepository.Add(user);
+        
+        await _unitOfWork.CommitAsync();
+
+        return new ResponseRegisterUserJson(user.Id,user.Name, 
+            new ResponseTokensJson("", "")
+            );
     }
 
-    private void ValidateAndThrowOnFailure(RequestRegisterUserAccountJson request)
+    private async Task ValidateAndThrowOnFailure(RequestRegisterUserAccountJson request)
     {
         var validator = new RegisterUserAccountValidator();
-        var result = validator.Validate(request);
+        var result = await validator.ValidateAsync(request);
 
+        var emailExist = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+        
+        if (emailExist)
+        {
+            result.Errors.Add(new ValidationFailure("email", ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
+        }
+        
         if (result.IsValid) return;
 
         var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
