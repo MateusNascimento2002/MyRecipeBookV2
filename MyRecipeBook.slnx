@@ -11,5 +11,6 @@
     <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
     <Project Path="tests/UseCases.Tests/UseCases.Tests.csproj" />
     <Project Path="tests/Validators.Tests/Validators.Tests.csproj" />
+    <Project Path="tests/WebApi.Tests/WebApi.Tests.csproj" />
   </Folder>
 </Solution>
