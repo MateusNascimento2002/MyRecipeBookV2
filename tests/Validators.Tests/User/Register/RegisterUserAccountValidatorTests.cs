@@ -1,10 +1,12 @@
-﻿using CommonTestUtilities.Requests;
+﻿using System.Diagnostics.CodeAnalysis;
+using CommonTestUtilities.Requests;
 using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Exception;
 using Shouldly;
 
 namespace Validators.Tests.User.Register;
 
+[SuppressMessage("Usage", "xUnit1012:Null should only be used for nullable parameters")]
 public class RegisterUserAccountValidatorTests
 {
     [Fact]
@@ -19,11 +21,14 @@ public class RegisterUserAccountValidatorTests
         result.IsValid.ShouldBeTrue();
     }
 
-    [Fact]
-    public void Validate_ShouldHaveError_WhenNameIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("    ")]
+    public void Validate_ShouldHaveError_WhenNameIsEmpty(string name)
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
-        request.Name = string.Empty;
+        request.Name = name;
 
         var validator = new RegisterUserAccountValidator();
         
@@ -37,11 +42,14 @@ public class RegisterUserAccountValidatorTests
         });
     }
 
-    [Fact]
-    public void Validate_ShouldHaveError_WhenEmailIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("    ")]
+    public void Validate_ShouldHaveError_WhenEmailIsEmpty(string email)
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
-        request.Email = string.Empty;
+        request.Email = email;
 
         var validator = new RegisterUserAccountValidator();
         
@@ -55,11 +63,14 @@ public class RegisterUserAccountValidatorTests
         });
     }
 
-    [Fact]
-    public void Validate_ShouldHaveError_WhenPasswordIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("    ")]
+    public void Validate_ShouldHaveError_WhenPasswordIsEmpty(string password)
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
-        request.Password = string.Empty;
+        request.Password = password;
 
         var validator = new RegisterUserAccountValidator();
         
