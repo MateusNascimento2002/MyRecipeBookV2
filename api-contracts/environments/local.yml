@@ -1,4 +1,4 @@
 name: local
 variables:
   - name: apiUrl
-    value: https://localhost:7197
+    value: https://localhost:5000
