@@ -29,6 +29,6 @@ public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCas
         if (isPasswordValid == false)
             throw new InvalidLoginException();
 
-        return new ResponseRegisterUserJson(user.Id, user.Name, new ResponseTokensJson("access", "refresh"));
+        return new ResponseRegisterUserJson(user.Id, user.Name, new ResponseTokensJson(null, null));
     }
 }
