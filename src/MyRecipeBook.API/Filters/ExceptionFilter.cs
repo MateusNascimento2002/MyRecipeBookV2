@@ -10,10 +10,10 @@ public class ExceptionFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
-        if(context.Exception is ErrorOnValidationException validationException)
+        if(context.Exception is MyRecipeBookBaseException validationException)
         {
-            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(new ResponseErrorJson(validationException.GetErrorMessages()));
+            context.HttpContext.Response.StatusCode = (int)validationException.GetStatusCode();
+            context.Result = new ObjectResult(new ResponseErrorJson(validationException.GetErrorMessages()));
         }
         else
         {
