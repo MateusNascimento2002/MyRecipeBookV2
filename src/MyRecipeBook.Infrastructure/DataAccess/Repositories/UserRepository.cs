@@ -19,4 +19,11 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
     {
         return _context.Users.AnyAsync(u => u.Email.Equals(email) && u.IsActive);
     }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u => u.IsActive && u.Email.Equals(email));
+    }
 }
