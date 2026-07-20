@@ -27,6 +27,9 @@
         <value>Oops! Ocorreu um erro desconhecido!</value>
     </data>
     <data name="VALIDATION_EMAIL_ALREADY_EXISTS" xml:space="preserve">
-        <value>Oops! Esse e-mail já está em uso</value>
+        <value>Oops! Esse e-mail já está em uso.</value>
+    </data>
+    <data name="VALIDATION_LOGIN_INVALID" xml:space="preserve">
+        <value>Oops! E-mail ou senha inválidos.</value>
     </data>
 </root>

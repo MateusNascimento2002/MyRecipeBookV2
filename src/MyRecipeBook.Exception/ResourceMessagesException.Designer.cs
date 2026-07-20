@@ -60,7 +60,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unexpected error occurred. Please try again later..
+        ///   Looks up a localized string similar to An unexpected error occurred. Please try again later!.
         /// </summary>
         public static string UNKOWN_ERROR {
             get {
@@ -69,7 +69,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! This email is already in use.
+        ///   Looks up a localized string similar to Oops! This email is already in use..
         /// </summary>
         public static string VALIDATION_EMAIL_ALREADY_EXISTS {
             get {
@@ -78,7 +78,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Your Email is invalid.
+        ///   Looks up a localized string similar to Oops! Your Email is invalid..
         /// </summary>
         public static string VALIDATION_EMAIL_INVALID {
             get {
@@ -87,7 +87,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Email is required.
+        ///   Looks up a localized string similar to Oops! Email is required..
         /// </summary>
         public static string VALIDATION_EMAIL_REQUIRED {
             get {
@@ -96,7 +96,16 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Name is required.
+        ///   Looks up a localized string similar to Oops! Email or password invalid..
+        /// </summary>
+        public static string VALIDATION_LOGIN_INVALID {
+            get {
+                return ResourceManager.GetString("VALIDATION_LOGIN_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Name is required..
         /// </summary>
         public static string VALIDATION_NAME_REQUIRED {
             get {
@@ -105,7 +114,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Password is required.
+        ///   Looks up a localized string similar to Oops! Password is required..
         /// </summary>
         public static string VALIDATION_PASSWORD_REQUIRED {
             get {
