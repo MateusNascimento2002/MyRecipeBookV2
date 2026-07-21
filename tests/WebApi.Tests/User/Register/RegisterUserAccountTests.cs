@@ -31,7 +31,7 @@ public class RegisterUserAccountTests : BaseIntegrationTest
 
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(request.Name);
         //todo: correct when implement tokens.
-        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeEmpty();
+        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldNotBeNullOrEmpty();
         responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeEmpty();
 
         var userExists = DbContext.Users.Any(user =>

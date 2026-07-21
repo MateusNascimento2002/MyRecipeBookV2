@@ -2,6 +2,7 @@
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Interfaces.Repositories.Users;
 using MyRecipeBook.Domain.Security.PasswordHashing;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exception.ExceptionBase;
 
 namespace MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
@@ -10,12 +11,14 @@ public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCas
 {
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public LoginWithEmailAndPasswordUseCase(IPasswordHasher passwordHasher,
-        IUserReadOnlyRepository userReadOnlyRepository)
+        IUserReadOnlyRepository userReadOnlyRepository, IAccessTokenGenerator accessTokenGenerator)
     {
         _passwordHasher = passwordHasher;
         _userReadOnlyRepository = userReadOnlyRepository;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseRegisterUserJson> Execute(RequestLoginJson request)
@@ -30,6 +33,6 @@ public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCas
         if (isPasswordValid == false)
             throw new InvalidLoginException();
 
-        return new ResponseRegisterUserJson(user.Id, user.Name, new ResponseTokensJson(null, null));
+        return new ResponseRegisterUserJson(user.Id, user.Name, new ResponseTokensJson(_accessTokenGenerator.Generate(user), null));
     }
 }

@@ -40,11 +40,8 @@ builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-builder.Services.AddPasswordHasher();
-builder.Services.AddUseCases();
-builder.Services.AddRepositories();
-builder.Services.AddDbContext(builder.Configuration);
-builder.Services.AddUnitOfWork();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

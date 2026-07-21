@@ -8,7 +8,12 @@ public static class DependencyInjectionExtension
 {
     extension(IServiceCollection services)
     {
-        public void AddUseCases()
+        public void AddApplication()
+        {
+            services.AddUseCases();    
+        }
+        
+        private void AddUseCases()
         {
             services.AddScoped<IRegisterUserAccountUseCase, RegisterUserAccountUseCase>();
             services.AddScoped<ILoginWithEmailAndPasswordUseCase, LoginWithEmailAndPasswordUseCase>();

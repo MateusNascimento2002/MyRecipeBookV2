@@ -40,7 +40,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
 
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(_user1.GetName());
         //todo: correct when implement tokens.
-        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeNull();
+        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldNotBeNullOrEmpty();
         responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeNull();
     }
 
@@ -49,8 +49,35 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     public async Task ShouldThrowException_WhenUserDontExist(string culture)
     {
         var request = RequestLoginJsonBuilder.Build();
+        
+        var result = await Post(REQUEST_URI, request, culture);
 
+        result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
 
+        await using var responseBody = await result.Content.ReadAsStreamAsync();
+
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+
+        var errors = responseData.RootElement.GetProperty("errors").EnumerateArray();
+
+        var expectedMessage = ResourceMessagesException.ResourceManager.GetString(
+            nameof(ResourceMessagesException.VALIDATION_LOGIN_INVALID),
+            CultureInfo.GetCultureInfo(culture));
+
+        errors.ShouldSatisfyAllConditions(errorsList =>
+        {
+            errorsList.Count().ShouldBe(1);
+            errorsList.ShouldContain(error =>
+                error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
+        });
+    }
+    
+    [Theory]
+    [ClassData(typeof(CultureInlineData))]
+    public async Task ShouldThrowException_WhenPasswordIsWrong(string culture)
+    {
+        var request = RequestLoginJsonBuilder.Build();
+        request.Email = _user1.GetEmail();
         var result = await Post(REQUEST_URI, request, culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);

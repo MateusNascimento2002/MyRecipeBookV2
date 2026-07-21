@@ -63,11 +63,11 @@ public class RegisterUserAccountUseCaseTests
         var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
         var passwordHasherBuilder = new IPasswordHasherBuilder().Build();
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
+        var accessTokenGenerator = IAccessTokenGeneratorBuilder.Build();
 
         if (emailThatAlreadyExists.IsNotEmpty())
             userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
 
-        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository,
-            userReadOnlyRepositoryBuilder.Build(), unitOfWork);
+        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork, accessTokenGenerator);
     }
 }
