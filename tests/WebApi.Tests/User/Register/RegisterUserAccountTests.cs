@@ -3,36 +3,26 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using CommonTestUtilities.Requests;
-using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
-using MyRecipeBook.Infrastructure.DataAccess;
 using Shouldly;
 using WebApi.Tests.InlineData;
 
 namespace WebApi.Tests.User.Register;
 
-public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFactory>
+public class RegisterUserAccountTests : BaseIntegrationTest
 {
-    private readonly HttpClient _httpClient;
-    private readonly MyRecipeBookDbContext _dbContext;
-
     private const string REQUEST_URI = "/users";
 
-    public RegisterUserAccountTests(MyRecipeBookApplicationFactory factory)
+    public RegisterUserAccountTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
-        _httpClient = factory.CreateClient();
-
-        var scope = factory.Services.CreateScope();
-
-        _dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
     }
 
     [Fact]
     public async Task Success()
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
-        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+        var result = await Post(REQUEST_URI, request);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Created);
 
@@ -45,7 +35,7 @@ public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFac
         responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeEmpty();
         responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeEmpty();
 
-        var userExists = _dbContext.Users.Any(user =>
+        var userExists = DbContext.Users.Any(user =>
             user.Name.Equals(request.Name) && user.Email.Equals(request.Email) && user.IsActive);
 
         userExists.ShouldBeTrue();
@@ -57,10 +47,8 @@ public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFac
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
         request.Name = string.Empty;
-        _httpClient.DefaultRequestHeaders.Clear();
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd(culture);
 
-        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+        var result = await Post(REQUEST_URI, request, culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
@@ -81,7 +69,7 @@ public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFac
                 error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
         });
         
-        var userExists = _dbContext.Users.Any(user =>
+        var userExists = DbContext.Users.Any(user =>
             user.Name.Equals(request.Name) && user.Email.Equals(request.Email) && user.IsActive);
 
         userExists.ShouldBeFalse();

@@ -1,31 +1,23 @@
 ﻿using System.Globalization;
 using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 using CommonTestUtilities.Requests;
-using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
-using MyRecipeBook.Infrastructure.DataAccess;
 using Shouldly;
 using WebApi.Tests.InlineData;
 using WebApi.Tests.Resources;
 
 namespace WebApi.Tests.Login.WithEmailAndPassword;
 
-public class LoginWithEmailAndPasswordTests : IClassFixture<MyRecipeBookApplicationFactory>
+public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/authentication";
-    private readonly MyRecipeBookDbContext _dbContext;
-    private readonly HttpClient _httpClient;
     private readonly UserIdentityManager _user1;
 
-    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory)
+    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
-        _httpClient = factory.CreateClient();
-        var scope = factory.Services.CreateScope();
-        _dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
         _user1 = factory.User1;
     }
 
@@ -39,7 +31,7 @@ public class LoginWithEmailAndPasswordTests : IClassFixture<MyRecipeBookApplicat
             Password = _user1.GetPassword()
         };
         
-        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+        var result = await Post(REQUEST_URI, request);
 
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
@@ -58,11 +50,10 @@ public class LoginWithEmailAndPasswordTests : IClassFixture<MyRecipeBookApplicat
     public async Task ShouldThrowException_WhenUserDontExist(string culture)
     {
         var request = RequestLoginJsonBuilder.Build();
-        _httpClient.DefaultRequestHeaders.Clear();
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd(culture);
+        
 
-        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
-
+        var result = await Post(REQUEST_URI, request, culture);
+        
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
 
         await using var responseBody = await result.Content.ReadAsStreamAsync();
