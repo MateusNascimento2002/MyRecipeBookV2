@@ -1,0 +1,85 @@
+﻿using System.Globalization;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text.Json;
+using CommonTestUtilities.Requests;
+using Microsoft.Extensions.DependencyInjection;
+using MyRecipeBook.Communication.Requests;
+using MyRecipeBook.Domain.Extensions;
+using MyRecipeBook.Exception;
+using MyRecipeBook.Infrastructure.DataAccess;
+using Shouldly;
+using WebApi.Tests.InlineData;
+using WebApi.Tests.Resources;
+
+namespace WebApi.Tests.Login.WithEmailAndPassword;
+
+public class LoginWithEmailAndPasswordTests : IClassFixture<MyRecipeBookApplicationFactory>
+{
+    private const string REQUEST_URI = "/authentication";
+    private readonly MyRecipeBookDbContext _dbContext;
+    private readonly HttpClient _httpClient;
+    private readonly UserIdentityManager _user1;
+
+    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory)
+    {
+        _httpClient = factory.CreateClient();
+        var scope = factory.Services.CreateScope();
+        _dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
+        _user1 = factory.User1;
+    }
+
+    [Fact]
+    public async Task Success()
+    {
+        var request = new RequestLoginJson
+        {
+ 
+            Email = _user1.GetEmail(),
+            Password = _user1.GetPassword()
+        };
+        
+        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        result.StatusCode.ShouldBe(HttpStatusCode.OK);
+
+        await using var responseBody = await result.Content.ReadAsStreamAsync();
+        
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+        
+        responseData.RootElement.GetProperty("name").GetString().ShouldBe(_user1.GetName());
+        //todo: correct when implement tokens.
+        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeNull();
+        responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeNull();
+    }
+
+    [Theory]
+    [ClassData(typeof(CultureInlineData))]
+    public async Task ShouldThrowException_WhenUserDontExist(string culture)
+    {
+        var request = RequestLoginJsonBuilder.Build();
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd(culture);
+
+        var result = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
+
+        await using var responseBody = await result.Content.ReadAsStreamAsync();
+
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+
+        var errors = responseData.RootElement.GetProperty("errors").EnumerateArray();
+
+        var expectedMessage = ResourceMessagesException.ResourceManager.GetString(
+            nameof(ResourceMessagesException.VALIDATION_LOGIN_INVALID),
+            CultureInfo.GetCultureInfo(culture));
+
+        errors.ShouldSatisfyAllConditions(errorsList =>
+        {
+            errorsList.Count().ShouldBe(1);
+            errorsList.ShouldContain(error =>
+                error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
+        });
+    }
+}
