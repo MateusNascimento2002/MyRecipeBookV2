@@ -3,7 +3,6 @@ using CommonTestUtilities.Entities;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
 using MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
-using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
@@ -16,7 +15,7 @@ public class LoginWithEmailAndPasswordUseCaseTests
     [Fact]
     public async Task Success()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
         var request = RequestLoginJsonBuilder.Build();
 
         request.Email = user.Email;
@@ -53,7 +52,7 @@ public class LoginWithEmailAndPasswordUseCaseTests
     public async Task ShouldThrowException_WhenPasswordIsWrong()
     {
         var request = RequestLoginJsonBuilder.Build();
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
         var useCase = CreateUseCase(password: string.Empty, user);
 
         var exception = await useCase.Execute(request).ShouldThrowAsync<InvalidLoginException>();
