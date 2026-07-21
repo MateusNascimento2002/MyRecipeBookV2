@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 using CommonTestUtilities.Requests;
 using MyRecipeBook.Domain.Extensions;
@@ -68,7 +67,7 @@ public class RegisterUserAccountTests : BaseIntegrationTest
             errorsList.ShouldContain(error =>
                 error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
         });
-        
+
         var userExists = DbContext.Users.Any(user =>
             user.Name.Equals(request.Name) && user.Email.Equals(request.Email) && user.IsActive);
 

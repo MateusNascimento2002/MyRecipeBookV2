@@ -14,37 +14,37 @@ namespace MyRecipeBook.Application.UseCases.User.Register;
 public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
 {
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
-    private readonly IUserReadOnlyRepository _userReadOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+    private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
 
     public RegisterUserAccountUseCase(
         IPasswordHasher passwordHasher,
         IUserWriteOnlyRepository userWriteOnlyRepository,
         IUserReadOnlyRepository userReadOnlyRepository,
-        IUnitOfWork  unitOfWork)
+        IUnitOfWork unitOfWork)
     {
         _passwordHasher = passwordHasher;
         _userWriteOnlyRepository = userWriteOnlyRepository;
         _userReadOnlyRepository = userReadOnlyRepository;
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<ResponseRegisterUserJson> Execute(RequestRegisterUserAccountJson request)
     {
         await ValidateAndThrowOnFailure(request);
-        
+
         var user = request.Adapt<DomainUser>();
-        
+
         user.Password = _passwordHasher.HashPassword(request.Password);
-        
+
         await _userWriteOnlyRepository.Add(user);
-        
+
         await _unitOfWork.CommitAsync();
 
-        return new ResponseRegisterUserJson(user.Id,user.Name, 
+        return new ResponseRegisterUserJson(user.Id, user.Name,
             new ResponseTokensJson("", "")
-            );
+        );
     }
 
     private async Task ValidateAndThrowOnFailure(RequestRegisterUserAccountJson request)
@@ -53,12 +53,11 @@ public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
         var result = await validator.ValidateAsync(request);
 
         var emailExist = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
-        
+
         if (emailExist)
-        {
-            result.Errors.Add(new ValidationFailure("email", ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
-        }
-        
+            result.Errors.Add(new ValidationFailure("email",
+                ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
+
         if (result.IsValid) return;
 
         var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();

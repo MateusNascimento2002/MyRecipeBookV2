@@ -16,47 +16,45 @@ public class RegisterUserAccountUseCaseTests
         var request = RequestRegisterUserAccountJsonBuilder.Build();
 
         var useCase = CreateUseCase();
-        
+
         var result = await useCase.Execute(request);
 
         result.ShouldNotBeNull();
         result.Name.ShouldBe(request.Name);
         result.Tokens.ShouldNotBeNull();
     }
-    
+
     [Fact]
     public async Task Validate_ShouldThrowExeception_WhenNameIsEmpty()
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
         request.Name = string.Empty;
-        
+
         var useCase = CreateUseCase();
-        
+
         var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
-        
+
         exception.GetErrorMessages().ShouldSatisfyAllConditions(errorMessages =>
         {
             errorMessages.Count.ShouldBe(1);
             errorMessages.ShouldContain(ResourceMessagesException.VALIDATION_NAME_REQUIRED);
         });
     }
-    
+
     [Fact]
     public async Task Validate_ShouldThrowExeception_WhenEmailAlreadyExists()
     {
         var request = RequestRegisterUserAccountJsonBuilder.Build();
-        
+
         var useCase = CreateUseCase(request.Email);
-        
+
         var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
-        
+
         exception.GetErrorMessages().ShouldSatisfyAllConditions(errorMessages =>
         {
             errorMessages.Count.ShouldBe(1);
             errorMessages.ShouldContain(ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS);
         });
-
-       
     }
 
     private RegisterUserAccountUseCase CreateUseCase(string? emailThatAlreadyExists = null)
@@ -67,10 +65,9 @@ public class RegisterUserAccountUseCaseTests
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
 
         if (emailThatAlreadyExists.IsNotEmpty())
-        {
             userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
-        }
-        
-        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork);
+
+        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository,
+            userReadOnlyRepositoryBuilder.Build(), unitOfWork);
     }
 }

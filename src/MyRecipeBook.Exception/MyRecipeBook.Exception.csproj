@@ -7,21 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="ResourceMessagesException.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>ResourceMessagesException.Designer.cs</LastGenOutput>
-        <CustomToolNamespace>MyRecipeBook.Exception</CustomToolNamespace>
-      </EmbeddedResource>
+        <EmbeddedResource Update="ResourceMessagesException.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ResourceMessagesException.Designer.cs</LastGenOutput>
+            <CustomToolNamespace>MyRecipeBook.Exception</CustomToolNamespace>
+        </EmbeddedResource>
 
-      <EmbeddedResource Update="ResourceMessagesException.pt-br.resx">
-        <DependentUpon>ResourceMessagesException.resx</DependentUpon>
-      </EmbeddedResource>
+        <EmbeddedResource Update="ResourceMessagesException.pt-br.resx">
+            <DependentUpon>ResourceMessagesException.resx</DependentUpon>
+        </EmbeddedResource>
 
-      <Compile Update="ResourceMessagesException.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ResourceMessagesException.resx</DependentUpon>
-      </Compile>
+        <Compile Update="ResourceMessagesException.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ResourceMessagesException.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>

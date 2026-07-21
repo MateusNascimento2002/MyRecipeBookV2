@@ -10,14 +10,14 @@ namespace MyRecipeBook.API.Controllers;
 public class AuthenticationController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseRegisterUserJson),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseRegisterUserJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login(
         [FromServices] ILoginWithEmailAndPasswordUseCase useCase,
         [FromBody] RequestLoginJson request)
     {
         var result = await useCase.Execute(request);
-        
+
         return Ok(result);
     }
 }

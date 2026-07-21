@@ -24,12 +24,12 @@ public static class DependencyInjectionExtension
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
         }
-        
+
         public void AddUnitOfWork()
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
-        
+
         public void AddDbContext(IConfiguration configuration)
         {
             services.AddDbContext<MyRecipeBookDbContext>(options =>

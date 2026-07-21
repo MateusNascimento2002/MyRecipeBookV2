@@ -4,7 +4,13 @@ namespace MyRecipeBook.Exception.ExceptionBase;
 
 public class ErrorOnValidationException(List<string> validationErrors) : MyRecipeBookBaseException
 {
-    public override List<string> GetErrorMessages() => validationErrors;
-    
-    public override HttpStatusCode GetStatusCode() => HttpStatusCode.BadRequest;
+    public override List<string> GetErrorMessages()
+    {
+        return validationErrors;
+    }
+
+    public override HttpStatusCode GetStatusCode()
+    {
+        return HttpStatusCode.BadRequest;
+    }
 }

@@ -9,12 +9,12 @@ public class UserBuilder
     public static (User user, string rawPassword) Build()
     {
         var (password, hashedPassword) = GenerateRandomPassword();
-        
+
         var user = new Faker<User>()
             .RuleFor(user => user.Name, faker => faker.Person.FirstName)
             .RuleFor(user => user.Email, (faker, user) => faker.Internet.Email(user.Name))
             .RuleFor(user => user.Password, _ => hashedPassword);
-        
+
         return (user, password);
     }
 

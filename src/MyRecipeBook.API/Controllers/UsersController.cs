@@ -10,7 +10,7 @@ namespace MyRecipeBook.API.Controllers;
 public class UsersController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseRegisterUserJson),StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseRegisterUserJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterUserAccountUseCase useCase,

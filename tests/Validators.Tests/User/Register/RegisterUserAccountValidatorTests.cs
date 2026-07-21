@@ -15,9 +15,9 @@ public class RegisterUserAccountValidatorTests
         var request = RequestRegisterUserAccountJsonBuilder.Build();
 
         var validator = new RegisterUserAccountValidator();
-        
+
         var result = validator.Validate(request);
-        
+
         result.IsValid.ShouldBeTrue();
     }
 
@@ -31,14 +31,15 @@ public class RegisterUserAccountValidatorTests
         request.Name = name;
 
         var validator = new RegisterUserAccountValidator();
-        
+
         var result = validator.Validate(request);
-        
+
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(errors =>
         {
             errors.ShouldHaveSingleItem();
-            errors.ShouldContain(error => error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_NAME_REQUIRED));
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_NAME_REQUIRED));
         });
     }
 
@@ -52,14 +53,15 @@ public class RegisterUserAccountValidatorTests
         request.Email = email;
 
         var validator = new RegisterUserAccountValidator();
-        
+
         var result = validator.Validate(request);
-        
+
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(errors =>
         {
             errors.ShouldHaveSingleItem();
-            errors.ShouldContain(error => error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_EMAIL_REQUIRED));
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_EMAIL_REQUIRED));
         });
     }
 
@@ -73,14 +75,15 @@ public class RegisterUserAccountValidatorTests
         request.Password = password;
 
         var validator = new RegisterUserAccountValidator();
-        
+
         var result = validator.Validate(request);
-        
+
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldSatisfyAllConditions(errors =>
         {
             errors.ShouldHaveSingleItem();
-            errors.ShouldContain(error => error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_PASSWORD_REQUIRED));
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_PASSWORD_REQUIRED));
         });
     }
 
@@ -101,7 +104,8 @@ public class RegisterUserAccountValidatorTests
         result.Errors.ShouldSatisfyAllConditions(errors =>
         {
             errors.ShouldHaveSingleItem();
-            errors.ShouldContain(error => error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_EMAIL_INVALID));
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_EMAIL_INVALID));
             errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Email)));
         });
     }

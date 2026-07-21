@@ -10,7 +10,7 @@ public class IPasswordHasherBuilder
     public IPasswordHasherBuilder()
     {
         _passwordHasherMock = new Mock<IPasswordHasher>();
-        
+
         _passwordHasherMock.Setup(repo => repo.HashPassword(It.IsAny<string>())).Returns("hashedPassword");
     }
 

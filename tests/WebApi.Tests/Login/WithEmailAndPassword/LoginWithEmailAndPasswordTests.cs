@@ -26,19 +26,18 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     {
         var request = new RequestLoginJson
         {
- 
             Email = _user1.GetEmail(),
             Password = _user1.GetPassword()
         };
-        
+
         var result = await Post(REQUEST_URI, request);
 
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         await using var responseBody = await result.Content.ReadAsStreamAsync();
-        
+
         var responseData = await JsonDocument.ParseAsync(responseBody);
-        
+
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(_user1.GetName());
         //todo: correct when implement tokens.
         responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeNull();
@@ -50,10 +49,10 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     public async Task ShouldThrowException_WhenUserDontExist(string culture)
     {
         var request = RequestLoginJsonBuilder.Build();
-        
+
 
         var result = await Post(REQUEST_URI, request, culture);
-        
+
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
 
         await using var responseBody = await result.Content.ReadAsStreamAsync();

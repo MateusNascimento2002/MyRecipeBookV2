@@ -23,7 +23,7 @@ public class RegisterUserAccountValidator : AbstractValidator<RequestRegisterUse
 
         When(user => user.Email.IsNotEmpty(), () =>
         {
-            RuleFor(x => x.Email) 
+            RuleFor(x => x.Email)
                 .EmailAddress()
                 .WithMessage(ResourceMessagesException.VALIDATION_EMAIL_INVALID);
         });
