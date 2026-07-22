@@ -50,7 +50,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     {
         var request = RequestLoginJsonBuilder.Build();
         
-        var result = await Post(REQUEST_URI, request, culture);
+        var result = await Post(REQUEST_URI, request, culture: culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
 
@@ -78,7 +78,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     {
         var request = RequestLoginJsonBuilder.Build();
         request.Email = _user1.GetEmail();
-        var result = await Post(REQUEST_URI, request, culture);
+        var result = await Post(REQUEST_URI, request, culture: culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
 

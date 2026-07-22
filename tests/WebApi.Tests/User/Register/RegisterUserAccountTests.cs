@@ -47,7 +47,7 @@ public class RegisterUserAccountTests : BaseIntegrationTest
         var request = RequestRegisterUserAccountJsonBuilder.Build();
         request.Name = string.Empty;
 
-        var result = await Post(REQUEST_URI, request, culture);
+        var result = await Post(REQUEST_URI, request, culture: culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
