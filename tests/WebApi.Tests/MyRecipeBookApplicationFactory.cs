@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Domain.Security.PasswordHashing;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Infrastructure.DataAccess;
 using Testcontainers.PostgreSql;
 using WebApi.Tests.Resources;
@@ -21,16 +22,21 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
             .Build();
     }
 
-    public UserIdentityManager User1 { get; private set; }
+    public UserIdentityManager User1 { get; private set; } = null!;
 
     public async Task InitializeAsync()
     {
         await _postgreSqlContainer.StartAsync();
+        await SeedDatabase();
+    }
 
+    private async Task SeedDatabase()
+    {
         await using var scope = Services.CreateAsyncScope();
 
         var dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        var accessTokenGenerator = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
 
         var (user, password) = UserBuilder.Build();
 
@@ -39,7 +45,9 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         await dbContext.Users.AddAsync(user);
         await dbContext.SaveChangesAsync();
 
-        User1 = new UserIdentityManager(user, password);
+        var user1AccessTokenGenerator = accessTokenGenerator.Generate(user);
+        
+        User1 = new UserIdentityManager(user, password, user1AccessTokenGenerator);
     }
 
     Task IAsyncLifetime.DisposeAsync()

@@ -6,11 +6,13 @@ public class UserIdentityManager
 {
     private readonly string _password;
     private readonly DomainUser _user;
+    private readonly string _accessToken;
 
-    public UserIdentityManager(DomainUser user, string password)
+    public UserIdentityManager(DomainUser user, string password, string accessToken)
     {
         _user = user;
         _password = password;
+        _accessToken = accessToken;
     }
 
     public Guid GetId()
@@ -31,5 +33,10 @@ public class UserIdentityManager
     public string GetPassword()
     {
         return _password;
+    }
+    
+    public string GetAccessToken()
+    {
+        return _accessToken;
     }
 }
