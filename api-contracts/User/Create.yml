@@ -17,7 +17,6 @@ http:
         "email": "mateus@gmail.com",
         "password": "12345678"
       }
-  auth: inherit
 
 runtime:
   scripts:
