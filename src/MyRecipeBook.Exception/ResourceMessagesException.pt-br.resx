@@ -36,4 +36,10 @@
     <data name="VALIDATION_LOGIN_INVALID" xml:space="preserve">
         <value>Oops! E-mail ou senha inválidos.</value>
     </data>
+    <data name="VALIDATION_ACCESS_TOKEN_REQUIRED" xml:space="preserve">
+        <value>Oops! Essa requisição precisa de um access token.</value>
+    </data>
+    <data name="VALIDATION_RESOURCE_ACCESS_TOKEN" xml:space="preserve">
+        <value>Oops! Você não tem acesso a este recurso.</value>
+    </data>
 </root>
