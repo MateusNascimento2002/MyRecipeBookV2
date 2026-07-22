@@ -7,6 +7,6 @@ internal sealed class HttpContextTokenProvider(IHttpContextAccessor httpContextA
     public string GetToken()
     {
         var accessToken = httpContextAccessor.HttpContext!.Request.Headers.Authorization.ToString();
-        return accessToken;
+        return accessToken["Bearer ".Length..];
     }
 }

@@ -20,7 +20,7 @@ internal sealed class LoggedUser : ILoggedUser
     public async Task<User> Get()
     {
         var userId = GetUserId();
-        return await _dbContext.Users.FirstAsync(user => user.Id == userId && user.IsActive);
+        return await _dbContext.Users.AsNoTracking().FirstAsync(user => user.Id == userId && user.IsActive);
     }
 
     public Guid GetUserId()
