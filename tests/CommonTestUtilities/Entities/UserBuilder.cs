@@ -18,7 +18,7 @@ public class UserBuilder
         return (user, password);
     }
 
-    private static (string rawPassowrd, string hashedPassword) GenerateRandomPassword()
+    private static (string rawPassword, string hashedPassword) GenerateRandomPassword()
     {
         var passwordEncripter = new IPasswordHasherBuilder().Build();
         var randomPassword = new Faker().Internet.Password();
