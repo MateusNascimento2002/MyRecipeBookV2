@@ -8,9 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MyRecipeBook.API.Converters;
 using MyRecipeBook.API.Filters;
+using MyRecipeBook.API.Token;
 using MyRecipeBook.Application.Extensions;
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Interfaces.Repositories.Users;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Infrastructure.Extensions;
 using MyRecipeBook.Infrastructure.Migrations;
@@ -67,8 +69,11 @@ builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IAccessTokenProvider, HttpContextTokenProvider>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
