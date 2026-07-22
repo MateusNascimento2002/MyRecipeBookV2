@@ -2,6 +2,9 @@
 
 public class ResponseErrorJson
 {
+    public List<string> Errors { get; private set; }
+    public bool AccessTokenExpired { get; private set; }
+
     public ResponseErrorJson(List<string> errorMessages)
     {
         Errors = errorMessages;
@@ -12,5 +15,9 @@ public class ResponseErrorJson
         Errors = [errorMessage];
     }
 
-    public List<string> Errors { get; private set; }
+    public ResponseErrorJson(string errorMessage, bool accessTokenExpired)
+    {
+        Errors = [errorMessage];
+        AccessTokenExpired = accessTokenExpired;
+    }
 }
