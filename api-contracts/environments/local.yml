@@ -2,3 +2,5 @@ name: local
 variables:
   - name: apiUrl
     value: https://localhost:5000
+  - secret: true
+    name: accessToken
