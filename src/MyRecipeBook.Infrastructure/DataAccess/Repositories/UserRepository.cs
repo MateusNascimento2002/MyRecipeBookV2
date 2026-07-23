@@ -4,7 +4,7 @@ using MyRecipeBook.Domain.Interfaces.Repositories.Users;
 
 namespace MyRecipeBook.Infrastructure.DataAccess.Repositories;
 
-internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository
+internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository
 {
     private readonly MyRecipeBookDbContext _context;
 
@@ -33,5 +33,23 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
     public async Task Add(User user)
     {
         await _context.Users.AddAsync(user);
+    }
+
+    public void UpdateProfile(User user)
+    {
+        _context.Users.Attach(user);
+        
+        _context.Entry(user).Property(u => u.Name).IsModified = true;
+        _context.Entry(user).Property(u => u.Email).IsModified = true;
+    }
+
+    public async Task UpdatePassword(Guid userId, string newPassword)
+    {
+        await _context
+            .Users
+            .Where(user => user.Id == userId)
+            .ExecuteUpdateAsync(setter =>
+                setter.SetProperty(user => user.Password, newPassword)
+            );
     }
 }
