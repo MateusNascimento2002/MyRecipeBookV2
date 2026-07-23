@@ -1,0 +1,39 @@
+﻿name: Build & Tests
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-test:
+    name: Build & Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Installing .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Building
+        run: dotnet build
+
+      - name: Testing
+        run: dotnet test --settings tests/coverlet.runsettings --logger trx --results-directory ./TestResults
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test Results
+          path: 'TestResults/*.trx'
+          reporter: dotnet-trx
+
+      - name: Publish code coverage results
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: '**/coverage.cobertura.xml'
