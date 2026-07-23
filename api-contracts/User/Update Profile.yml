@@ -1,0 +1,22 @@
+info:
+  name: Update Profile
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{apiUrl}}/users"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "mateus12345@gmail.com",
+        "name": "Roberto"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

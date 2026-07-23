@@ -14,8 +14,8 @@ http:
     data: |-
       {
         "name": "Mateus Nascimento",
-        "email": "mateus@gmail.com",
-        "password": "12345678"
+        "email": "mateus12345@gmail.com",
+        "password": "123456781"
       }
 
 runtime:
