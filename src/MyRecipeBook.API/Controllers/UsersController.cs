@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyRecipeBook.Application.UseCases.User.ChangePassword;
 using MyRecipeBook.Application.UseCases.User.Profile;
 using MyRecipeBook.Application.UseCases.User.Register;
+using MyRecipeBook.Application.UseCases.User.Update;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 
@@ -23,7 +24,7 @@ public class UsersController : ControllerBase
         return Created($"users/{result.Id}", result);
     }
     
-    [HttpPut]
+    [HttpPatch]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [Authorize]
     public async Task<IActionResult> ChangePassword(
@@ -33,10 +34,23 @@ public class UsersController : ControllerBase
         await useCase.Execute(request);
         return NoContent();
     }
+    
+    [HttpPut]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize]
+    public async Task<IActionResult> UpdateProfile(
+        [FromServices] IUpdateUserUseCase useCase,
+        [FromBody] RequestUpdateUserJson request)
+    {
+        await useCase.Execute(request);
+        return NoContent();
+    }
 
     [HttpGet]
-    [Authorize]
     [ProducesResponseType(typeof(ResponseUserProfileJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize]
     public async Task<IActionResult> GetUserProfile([FromServices] IGetUserProfileUseCase useCase)
     {
         var result = await useCase.Execute();
