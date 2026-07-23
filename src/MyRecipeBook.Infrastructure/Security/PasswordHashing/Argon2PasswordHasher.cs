@@ -27,7 +27,7 @@ internal sealed class Argon2PasswordHasher : IPasswordHasher
         return Convert.ToBase64String(combinedBytes);
     }
 
-    public bool VerifyHashedPassword(string password, string hashedPassword)
+    public bool VerifyPassword(string password, string hashedPassword)
     {
         var combinedBytes = Convert.FromBase64String(hashedPassword);
 

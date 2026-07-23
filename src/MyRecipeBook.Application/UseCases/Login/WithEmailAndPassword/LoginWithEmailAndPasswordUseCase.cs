@@ -28,7 +28,7 @@ public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCas
         if (user is null)
             throw new InvalidLoginException();
 
-        var isPasswordValid = _passwordHasher.VerifyHashedPassword(request.Password, user.Password);
+        var isPasswordValid = _passwordHasher.VerifyPassword(request.Password, user.Password);
 
         if (isPasswordValid == false)
             throw new InvalidLoginException();
