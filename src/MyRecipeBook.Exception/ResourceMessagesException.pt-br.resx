@@ -42,4 +42,10 @@
     <data name="VALIDATION_RESOURCE_ACCESS_TOKEN" xml:space="preserve">
         <value>Oops! Você não tem acesso a este recurso.</value>
     </data>
+    <data name="VALIDATION_CURRENT_PASSWORD_INVALID" xml:space="preserve">
+        <value>Oops! A senha atual está errada.</value>
+    </data>
+    <data name="VALIDATION_PASSWORD_MIN_LENGTH" xml:space="preserve">
+        <value>Oops! Senha deve ter no minimo 8 caracteres.</value>
+    </data>
 </root>

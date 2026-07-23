@@ -149,4 +149,10 @@
     <data name="VALIDATION_RESOURCE_ACCESS_TOKEN" xml:space="preserve">
         <value>Oops! You don't have access to this resource.</value>
     </data>
+    <data name="VALIDATION_CURRENT_PASSWORD_INVALID" xml:space="preserve">
+        <value>Oops! The current password is wrong.</value>
+    </data>
+    <data name="VALIDATION_PASSWORD_MIN_LENGTH" xml:space="preserve">
+        <value>Oops! Password should have at least 8 characters.</value>
+    </data>
 </root>
