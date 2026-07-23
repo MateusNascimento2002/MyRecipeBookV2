@@ -1,16 +1,17 @@
 <Solution>
+    <Folder Name="/Solutions Items/" />
     <Folder Name="/src/">
-        <Project Path="src/MyRecipeBook.API/MyRecipeBook.API.csproj"/>
-        <Project Path="src/MyRecipeBook.Application/MyRecipeBook.Application.csproj"/>
-        <Project Path="src/MyRecipeBook.Communication/MyRecipeBook.Communication.csproj"/>
-        <Project Path="src/MyRecipeBook.Domain/MyRecipeBook.Domain.csproj"/>
-        <Project Path="src/MyRecipeBook.Exception/MyRecipeBook.Exception.csproj"/>
-        <Project Path="src/MyRecipeBook.Infrastructure/MyRecipeBook.Infrastructure.csproj"/>
+        <Project Path="src/MyRecipeBook.API/MyRecipeBook.API.csproj" />
+        <Project Path="src/MyRecipeBook.Application/MyRecipeBook.Application.csproj" />
+        <Project Path="src/MyRecipeBook.Communication/MyRecipeBook.Communication.csproj" />
+        <Project Path="src/MyRecipeBook.Domain/MyRecipeBook.Domain.csproj" />
+        <Project Path="src/MyRecipeBook.Exception/MyRecipeBook.Exception.csproj" />
+        <Project Path="src/MyRecipeBook.Infrastructure/MyRecipeBook.Infrastructure.csproj" />
     </Folder>
     <Folder Name="/tests/">
-        <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj"/>
-        <Project Path="tests/UseCases.Tests/UseCases.Tests.csproj"/>
-        <Project Path="tests/Validators.Tests/Validators.Tests.csproj"/>
-        <Project Path="tests/WebApi.Tests/WebApi.Tests.csproj"/>
+        <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
+        <Project Path="tests/UseCases.Tests/UseCases.Tests.csproj" />
+        <Project Path="tests/Validators.Tests/Validators.Tests.csproj" />
+        <Project Path="tests/WebApi.Tests/WebApi.Tests.csproj" />
     </Folder>
 </Solution>
