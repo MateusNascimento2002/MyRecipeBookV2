@@ -11,6 +11,5 @@ public class ChangePasswordValidator : AbstractValidator<RequestChangePasswordJs
     {
         RuleFor(x => x.NewPassword).Password();
 
-        RuleFor(x => x.CurrentPassword).Password();
     }
 }

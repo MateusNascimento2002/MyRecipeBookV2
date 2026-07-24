@@ -1,3 +1,7 @@
 ﻿namespace MyRecipeBook.Communication.Requests;
 
-public record RequestChangePasswordJson(string CurrentPassword, string NewPassword);
+public class RequestChangePasswordJson()
+{
+    public string CurrentPassword  { get; set; }  = string.Empty;
+    public string NewPassword { get; set; } = string.Empty;
+};
