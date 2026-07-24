@@ -109,4 +109,33 @@ public class RegisterUserAccountValidatorTests
             errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Email)));
         });
     }
+    
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(4)]
+    [InlineData(5)]
+    [InlineData(6)]
+    [InlineData(7)]
+    public void Validate_ShouldHaveError_WhenPasswordIsTooShort(int passWordLength)
+    {
+        // Arrange
+        var request = RequestRegisterUserAccountJsonBuilder.Build(passWordLength);
+
+        var validator = new RegisterUserAccountValidator();
+
+        // Act
+        var result = validator.Validate(request);
+
+        // Assert
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldSatisfyAllConditions(errors =>
+        {
+            errors.ShouldHaveSingleItem();
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_PASSWORD_MIN_LENGTH));
+            errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Password)));
+        });
+    }
 }
