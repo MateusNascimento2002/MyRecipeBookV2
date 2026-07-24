@@ -14,6 +14,8 @@ namespace WebApi.Tests;
 public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _postgreSqlContainer;
+    public UserIdentityManager User1 { get; private set; } = null!;
+    public string TOKEN_USER_NOT_FOUND_IN_DATABASE { get; private set; } = string.Empty;
 
     public MyRecipeBookApplicationFactory()
     {
@@ -22,7 +24,6 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
             .Build();
     }
 
-    public UserIdentityManager User1 { get; private set; } = null!;
 
     public async Task InitializeAsync()
     {
@@ -46,6 +47,8 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         await dbContext.SaveChangesAsync();
 
         var user1AccessTokenGenerator = accessTokenGenerator.Generate(user);
+
+        TOKEN_USER_NOT_FOUND_IN_DATABASE = accessTokenGenerator.Generate(new MyRecipeBook.Domain.Entities.User());
         
         User1 = new UserIdentityManager(user, password, user1AccessTokenGenerator);
     }
