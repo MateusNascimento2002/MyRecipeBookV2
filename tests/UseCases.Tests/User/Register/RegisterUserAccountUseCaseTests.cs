@@ -68,6 +68,7 @@ public class RegisterUserAccountUseCaseTests
         if (emailThatAlreadyExists.IsNotEmpty())
             userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
 
-        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork, accessTokenGenerator);
+        return new RegisterUserAccountUseCase(passwordHasherBuilder, userWriteOnlyRepository,
+            userReadOnlyRepositoryBuilder.Build(), unitOfWork, accessTokenGenerator);
     }
 }

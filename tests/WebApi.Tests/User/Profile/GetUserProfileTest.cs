@@ -8,9 +8,9 @@ namespace WebApi.Tests.User.Profile;
 public class GetUserProfileTest : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/users";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
-    
+    private readonly UserIdentityManager _user1;
+
     public GetUserProfileTest(MyRecipeBookApplicationFactory factory) : base(factory)
     {
         _user1 = factory.User1;
@@ -20,8 +20,8 @@ public class GetUserProfileTest : BaseIntegrationTest
     [Fact]
     public async Task Success()
     {
-        var response = await Get(REQUEST_URI, accessToken: _user1.GetAccessToken());
-        
+        var response = await Get(REQUEST_URI, _user1.GetAccessToken());
+
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
         await using var responseBody = await response.Content.ReadAsStreamAsync();
 
@@ -30,21 +30,21 @@ public class GetUserProfileTest : BaseIntegrationTest
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(_user1.GetName());
         responseData.RootElement.GetProperty("email").GetString().ShouldBe(_user1.GetEmail());
     }
-    
+
     [Theory]
     [InlineData("invalid")]
     [InlineData(" ")]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenIsInvalid(string token)
     {
-        var result = await Get(REQUEST_URI, accessToken: token);
+        var result = await Get(REQUEST_URI, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
-        var result = await Get(REQUEST_URI, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Get(REQUEST_URI, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

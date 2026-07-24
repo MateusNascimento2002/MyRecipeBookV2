@@ -1,12 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using CommonTestUtilities.Requests;
 using MyRecipeBook.Application.UseCases.User.ChangePassword;
-using MyRecipeBook.Application.UseCases.User.Update;
 using MyRecipeBook.Exception;
 using Shouldly;
 
 namespace Validators.Tests.User.ChangePassword;
-
 
 [SuppressMessage("Usage", "xUnit1012:Null should only be used for nullable parameters")]
 public class ChangePasswordValidatorTests

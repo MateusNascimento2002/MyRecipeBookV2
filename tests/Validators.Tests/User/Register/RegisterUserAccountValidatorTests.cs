@@ -109,7 +109,7 @@ public class RegisterUserAccountValidatorTests
             errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Email)));
         });
     }
-    
+
     [Theory]
     [InlineData(1)]
     [InlineData(2)]

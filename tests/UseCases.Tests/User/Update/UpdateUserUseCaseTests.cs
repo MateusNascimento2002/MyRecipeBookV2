@@ -36,7 +36,7 @@ public class UpdateUserUseCaseTests
 
         var request = RequestUpdateUserJsonBuilder.Build();
         request.Name = string.Empty;
-        
+
         var useCase = CreateUseCase(user);
 
         var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
@@ -59,7 +59,7 @@ public class UpdateUserUseCaseTests
 
         var request = RequestUpdateUserJsonBuilder.Build();
         request.Email = string.Empty;
-        
+
         var useCase = CreateUseCase(user);
 
         var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
@@ -106,9 +106,7 @@ public class UpdateUserUseCaseTests
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
 
         if (emailThatAlreadyExists.IsNotEmpty())
-        {
             userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
-        }
 
         return new UpdateUserUseCase(loggedUser, userReadOnlyRepositoryBuilder.Build(), userUpdateOnlyRepository,
             unitOfWork);

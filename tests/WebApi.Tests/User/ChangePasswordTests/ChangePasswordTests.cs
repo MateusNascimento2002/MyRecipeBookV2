@@ -14,8 +14,9 @@ namespace WebApi.Tests.User.ChangePasswordTests;
 public class ChangePasswordTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/users";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
+    private readonly UserIdentityManager _user1;
+
     public ChangePasswordTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
         _user1 = factory.User1;
@@ -28,11 +29,11 @@ public class ChangePasswordTests : BaseIntegrationTest
         var request = RequestChangePasswordJsonBuilder.Build();
         request.CurrentPassword = _user1.GetPassword();
 
-        var result = await Patch(REQUEST_URI, request, accessToken: _user1.GetAccessToken());
+        var result = await Patch(REQUEST_URI, request, _user1.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.NoContent);
     }
-    
+
     [Theory]
     [InlineData("invalid")]
     [InlineData(" ")]
@@ -40,17 +41,17 @@ public class ChangePasswordTests : BaseIntegrationTest
     {
         var request = RequestChangePasswordJsonBuilder.Build();
 
-        var result = await Patch(REQUEST_URI, request, accessToken: token);
+        var result = await Patch(REQUEST_URI, request, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
         var request = RequestChangePasswordJsonBuilder.Build();
 
-        var result = await Patch(REQUEST_URI, request, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Patch(REQUEST_URI, request, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -59,13 +60,13 @@ public class ChangePasswordTests : BaseIntegrationTest
     [ClassData(typeof(CultureInlineData))]
     public async Task Validate_ShouldBeAnErrorResponse_WhenNewPasswordIsEmpty(string culture)
     {
-        var request = new RequestChangePasswordJson()
+        var request = new RequestChangePasswordJson
         {
             CurrentPassword = _user1.GetPassword(),
             NewPassword = string.Empty
         };
 
-        var result = await Patch(REQUEST_URI, request, accessToken: _user1.GetAccessToken(), culture: culture);
+        var result = await Patch(REQUEST_URI, request, _user1.GetAccessToken(), culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
@@ -87,4 +88,3 @@ public class ChangePasswordTests : BaseIntegrationTest
         });
     }
 }
-

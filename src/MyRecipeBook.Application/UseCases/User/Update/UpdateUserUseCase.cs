@@ -6,23 +6,25 @@ using MyRecipeBook.Domain.Interfaces.Repositories.Users;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
 using DomainUser = MyRecipeBook.Domain.Entities.User;
+
 namespace MyRecipeBook.Application.UseCases.User.Update;
 
 public class UpdateUserUseCase : IUpdateUserUseCase
 {
     private readonly ILoggedUser _loggedUser;
-    private readonly IUserReadOnlyRepository  _userReadOnlyRepository;
-    private readonly IUserUpdateOnlyRepository  _userUpdateOnlyRepository;
-    private readonly IUnitOfWork  _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+    private readonly IUserUpdateOnlyRepository _userUpdateOnlyRepository;
 
-    public UpdateUserUseCase(ILoggedUser loggedUser, IUserReadOnlyRepository userReadOnlyRepository,  IUserUpdateOnlyRepository userUpdateOnlyRepository, IUnitOfWork unitOfWork)
+    public UpdateUserUseCase(ILoggedUser loggedUser, IUserReadOnlyRepository userReadOnlyRepository,
+        IUserUpdateOnlyRepository userUpdateOnlyRepository, IUnitOfWork unitOfWork)
     {
         _loggedUser = loggedUser;
         _userReadOnlyRepository = userReadOnlyRepository;
         _userUpdateOnlyRepository = userUpdateOnlyRepository;
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task Execute(RequestUpdateUserJson request)
     {
         var user = await _loggedUser.Get();
@@ -41,12 +43,10 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         {
             var emailAlreadyInUse = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
             if (emailAlreadyInUse)
-                result.Errors.Add(new ValidationFailure("Email", ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
+                result.Errors.Add(new ValidationFailure("Email",
+                    ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
         }
-       
-        if (!result.IsValid)
-        {
-            throw new ErrorOnValidationException(result.Errors.Select(e => e.ErrorMessage).ToList());
-        }
+
+        if (!result.IsValid) throw new ErrorOnValidationException(result.Errors.Select(e => e.ErrorMessage).ToList());
     }
 }

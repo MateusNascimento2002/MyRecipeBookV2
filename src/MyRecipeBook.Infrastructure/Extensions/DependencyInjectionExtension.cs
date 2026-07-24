@@ -27,7 +27,7 @@ public static class DependencyInjectionExtension
             services.AddDbContext(configuration);
             services.AddTokenGenerator(configuration);
         }
-        
+
         private void AddPasswordHasher()
         {
             services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();

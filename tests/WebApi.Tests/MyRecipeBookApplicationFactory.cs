@@ -14,8 +14,6 @@ namespace WebApi.Tests;
 public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _postgreSqlContainer;
-    public UserIdentityManager User1 { get; private set; } = null!;
-    public string TOKEN_USER_NOT_FOUND_IN_DATABASE { get; private set; } = string.Empty;
 
     public MyRecipeBookApplicationFactory()
     {
@@ -24,11 +22,19 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
             .Build();
     }
 
+    public UserIdentityManager User1 { get; private set; } = null!;
+    public string TOKEN_USER_NOT_FOUND_IN_DATABASE { get; private set; } = string.Empty;
+
 
     public async Task InitializeAsync()
     {
         await _postgreSqlContainer.StartAsync();
         await SeedDatabase();
+    }
+
+    Task IAsyncLifetime.DisposeAsync()
+    {
+        return _postgreSqlContainer.StopAsync();
     }
 
     private async Task SeedDatabase()
@@ -49,13 +55,8 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         var user1AccessTokenGenerator = accessTokenGenerator.Generate(user);
 
         TOKEN_USER_NOT_FOUND_IN_DATABASE = accessTokenGenerator.Generate(new MyRecipeBook.Domain.Entities.User());
-        
-        User1 = new UserIdentityManager(user, password, user1AccessTokenGenerator);
-    }
 
-    Task IAsyncLifetime.DisposeAsync()
-    {
-        return _postgreSqlContainer.StopAsync();
+        User1 = new UserIdentityManager(user, password, user1AccessTokenGenerator);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

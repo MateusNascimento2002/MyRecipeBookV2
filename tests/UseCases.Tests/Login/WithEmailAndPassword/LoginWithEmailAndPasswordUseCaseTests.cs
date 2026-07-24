@@ -71,13 +71,14 @@ public class LoginWithEmailAndPasswordUseCaseTests
         var passwordHasher = new IPasswordHasherBuilder();
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
         var accessTokenGenerator = IAccessTokenGeneratorBuilder.Build();
-        
+
         if (user is not null)
             userReadOnlyRepositoryBuilder.GetUserByEmail(user);
 
         if (password.IsNotEmpty())
             passwordHasher.VerifyHashedPassword(password);
 
-        return new LoginWithEmailAndPasswordUseCase(passwordHasher.Build(), userReadOnlyRepositoryBuilder.Build(), accessTokenGenerator);
+        return new LoginWithEmailAndPasswordUseCase(passwordHasher.Build(), userReadOnlyRepositoryBuilder.Build(),
+            accessTokenGenerator);
     }
 }

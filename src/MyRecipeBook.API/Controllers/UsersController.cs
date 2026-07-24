@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
         var result = await useCase.Execute(request);
         return Created($"users/{result.Id}", result);
     }
-    
+
     [HttpPatch]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [Authorize]
@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
         await useCase.Execute(request);
         return NoContent();
     }
-    
+
     [HttpPut]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

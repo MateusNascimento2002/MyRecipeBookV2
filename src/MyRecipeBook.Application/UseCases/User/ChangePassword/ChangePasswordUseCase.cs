@@ -6,6 +6,7 @@ using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
 using DomainUser = MyRecipeBook.Domain.Entities.User;
+
 namespace MyRecipeBook.Application.UseCases.User.ChangePassword;
 
 public class ChangePasswordUseCase : IChangePasswordUseCase
@@ -14,13 +15,14 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserUpdateOnlyRepository _userUpdateOnlyRepository;
 
-    public ChangePasswordUseCase(ILoggedUser loggedUser, IPasswordHasher passwordHasher,  IUserUpdateOnlyRepository userUpdateOnlyRepository)
+    public ChangePasswordUseCase(ILoggedUser loggedUser, IPasswordHasher passwordHasher,
+        IUserUpdateOnlyRepository userUpdateOnlyRepository)
     {
         _loggedUser = loggedUser;
         _passwordHasher = passwordHasher;
         _userUpdateOnlyRepository = userUpdateOnlyRepository;
     }
-    
+
     public async Task Execute(RequestChangePasswordJson request)
     {
         var user = await _loggedUser.Get();
@@ -33,10 +35,11 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
     {
         var result = new ChangePasswordValidator().Validate(request);
         var isPasswordValid = _passwordHasher.VerifyPassword(request.CurrentPassword, user.Password);
-         
-        if(isPasswordValid == false)
-            result.Errors.Add(new ValidationFailure("CurrentPassword", ResourceMessagesException.VALIDATION_CURRENT_PASSWORD_INVALID));
-        
+
+        if (isPasswordValid == false)
+            result.Errors.Add(new ValidationFailure("CurrentPassword",
+                ResourceMessagesException.VALIDATION_CURRENT_PASSWORD_INVALID));
+
         if (result.IsValid == false)
             throw new ErrorOnValidationException(result.Errors.Select(x => x.ErrorMessage).ToList());
     }

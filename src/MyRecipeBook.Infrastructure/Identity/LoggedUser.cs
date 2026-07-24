@@ -11,12 +11,13 @@ internal sealed class LoggedUser : ILoggedUser
 {
     private readonly IAccessTokenProvider _accessTokenProvider;
     private readonly MyRecipeBookDbContext _dbContext;
-    
+
     public LoggedUser(IAccessTokenProvider accessTokenProvider, MyRecipeBookDbContext dbContext)
     {
         _accessTokenProvider = accessTokenProvider;
         _dbContext = dbContext;
     }
+
     public async Task<User> Get()
     {
         var userId = GetUserId();
@@ -27,7 +28,7 @@ internal sealed class LoggedUser : ILoggedUser
     {
         var accessToken = _accessTokenProvider.GetToken();
         var handler = new JsonWebTokenHandler();
-        
+
         var jsonWebToken = handler.ReadJsonWebToken(accessToken);
 
         var subject = jsonWebToken.Claims.First(c => c.Type.Equals(JwtRegisteredClaimNames.Sub));

@@ -30,15 +30,10 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
             .SingleOrDefaultAsync(u => u.IsActive && u.Email.Equals(email));
     }
 
-    public async Task Add(User user)
-    {
-        await _context.Users.AddAsync(user);
-    }
-
     public void UpdateProfile(User user)
     {
         _context.Users.Attach(user);
-        
+
         _context.Entry(user).Property(u => u.Name).IsModified = true;
         _context.Entry(user).Property(u => u.Email).IsModified = true;
     }
@@ -51,5 +46,10 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
             .ExecuteUpdateAsync(setter =>
                 setter.SetProperty(user => user.Password, newPassword)
             );
+    }
+
+    public async Task Add(User user)
+    {
+        await _context.Users.AddAsync(user);
     }
 }

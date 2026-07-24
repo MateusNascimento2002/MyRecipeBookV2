@@ -8,7 +8,7 @@ public static class StringExtensions
     {
         return string.IsNullOrWhiteSpace(value);
     }
-    
+
     public static bool IsNotEmpty([NotNullWhen(true)] this string? value)
     {
         return !string.IsNullOrWhiteSpace(value);

@@ -4,9 +4,9 @@ namespace WebApi.Tests.Resources;
 
 public class UserIdentityManager
 {
+    private readonly string _accessToken;
     private readonly string _password;
     private readonly DomainUser _user;
-    private readonly string _accessToken;
 
     public UserIdentityManager(DomainUser user, string password, string accessToken)
     {
@@ -34,7 +34,7 @@ public class UserIdentityManager
     {
         return _password;
     }
-    
+
     public string GetAccessToken()
     {
         return _accessToken;

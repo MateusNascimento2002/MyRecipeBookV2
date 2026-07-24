@@ -4,9 +4,7 @@ using CommonTestUtilities.Identity;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
 using MyRecipeBook.Application.UseCases.User.ChangePassword;
-using MyRecipeBook.Application.UseCases.User.Update;
 using MyRecipeBook.Communication.Requests;
-using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
 using Shouldly;
@@ -34,7 +32,7 @@ public class ChangePasswordUseCaseTests
     {
         var (user, password) = UserBuilder.Build();
 
-        var request = new RequestChangePasswordJson()
+        var request = new RequestChangePasswordJson
         {
             NewPassword = string.Empty,
             CurrentPassword = password

@@ -41,7 +41,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(_user1.GetName());
         //todo: correct when implement tokens.
         responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldNotBeNullOrEmpty();
-        responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeNull();
+        responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().ShouldBeNullOrEmpty();
     }
 
     [Theory]
@@ -49,7 +49,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
     public async Task ShouldThrowException_WhenUserDontExist(string culture)
     {
         var request = RequestLoginJsonBuilder.Build();
-        
+
         var result = await Post(REQUEST_URI, request, culture: culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
@@ -71,7 +71,7 @@ public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
                 error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
         });
     }
-    
+
     [Theory]
     [ClassData(typeof(CultureInlineData))]
     public async Task ShouldThrowException_WhenPasswordIsWrong(string culture)

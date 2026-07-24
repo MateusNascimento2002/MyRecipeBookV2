@@ -17,23 +17,23 @@ internal sealed class JwtTokenHandler : IAccessTokenGenerator
         _expirationTimeInMinutes = expirationTimeInMinutes;
         _signingKey = signingKey;
     }
-    
+
     public string Generate(User user)
     {
         var claims = new List<Claim>
         {
-            new (JwtRegisteredClaimNames.Sub, user.Id.ToString())
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString())
         };
-        
-        var tokenDescriptor = new SecurityTokenDescriptor()
+
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
             Expires = DateTime.UtcNow.AddMinutes(_expirationTimeInMinutes),
             SigningCredentials = new SigningCredentials(Credentials(), SecurityAlgorithms.HmacSha256),
             Subject = new ClaimsIdentity(claims)
         };
-        
+
         var handler = new JsonWebTokenHandler();
-        
+
         return handler.CreateToken(tokenDescriptor);
     }
 

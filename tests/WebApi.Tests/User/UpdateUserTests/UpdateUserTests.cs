@@ -14,8 +14,8 @@ namespace WebApi.Tests.User.UpdateUserTests;
 public class UpadateUsersTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/users";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
+    private readonly UserIdentityManager _user1;
 
     public UpadateUsersTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
@@ -28,15 +28,17 @@ public class UpadateUsersTests : BaseIntegrationTest
     {
         var request = RequestUpdateUserJsonBuilder.Build();
 
-        var result = await Put(REQUEST_URI, request, accessToken: _user1.GetAccessToken());
+        var result = await Put(REQUEST_URI, request, _user1.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.NoContent);
-        
-        var userExistis = await DbContext.Users.AnyAsync(user => user.IsActive && user.Id == _user1.GetId() && user.Name.Equals(request.Name) && user.Email.Equals(request.Email));
-        
+
+        var userExistis = await DbContext.Users.AnyAsync(user =>
+            user.IsActive && user.Id == _user1.GetId() && user.Name.Equals(request.Name) &&
+            user.Email.Equals(request.Email));
+
         userExistis.ShouldBeTrue();
     }
-    
+
     [Theory]
     [InlineData("invalid")]
     [InlineData(" ")]
@@ -44,21 +46,21 @@ public class UpadateUsersTests : BaseIntegrationTest
     {
         var request = RequestUpdateUserJsonBuilder.Build();
 
-        var result = await Put(REQUEST_URI, request, accessToken: token);
+        var result = await Put(REQUEST_URI, request, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
         var request = RequestUpdateUserJsonBuilder.Build();
 
-        var result = await Put(REQUEST_URI, request, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Put(REQUEST_URI, request, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Theory]
     [ClassData(typeof(CultureInlineData))]
     public async Task Validate_ShouldBeAnErrorResponse_WhenNameIsEmpty(string culture)
@@ -66,7 +68,7 @@ public class UpadateUsersTests : BaseIntegrationTest
         var request = RequestUpdateUserJsonBuilder.Build();
         request.Name = string.Empty;
 
-        var result = await Put(REQUEST_URI, request, accessToken: _user1.GetAccessToken(), culture:culture);
+        var result = await Put(REQUEST_URI, request, _user1.GetAccessToken(), culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 

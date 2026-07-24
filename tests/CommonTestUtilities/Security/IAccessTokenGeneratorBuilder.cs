@@ -10,7 +10,8 @@ public class IAccessTokenGeneratorBuilder
     public static IAccessTokenGenerator Build()
     {
         var moq = new Mock<IAccessTokenGenerator>();
-        var fakeToken = new Faker().Random.String2(32, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        var fakeToken =
+            new Faker().Random.String2(32, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
         moq.Setup(generator => generator.Generate(It.IsAny<User>())).Returns(fakeToken);
         return moq.Object;
     }

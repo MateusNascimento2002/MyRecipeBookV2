@@ -9,9 +9,9 @@ namespace MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 
 public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCase
 {
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;
-    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public LoginWithEmailAndPasswordUseCase(IPasswordHasher passwordHasher,
         IUserReadOnlyRepository userReadOnlyRepository, IAccessTokenGenerator accessTokenGenerator)
@@ -33,6 +33,7 @@ public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCas
         if (isPasswordValid == false)
             throw new InvalidLoginException();
 
-        return new ResponseRegisterUserJson(user.Id, user.Name, new ResponseTokensJson(_accessTokenGenerator.Generate(user), null));
+        return new ResponseRegisterUserJson(user.Id, user.Name,
+            new ResponseTokensJson(_accessTokenGenerator.Generate(user), ""));
     }
 }

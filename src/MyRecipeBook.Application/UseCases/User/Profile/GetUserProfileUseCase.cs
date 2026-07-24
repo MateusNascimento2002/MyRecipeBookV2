@@ -12,7 +12,7 @@ public class GetUserProfileUseCase : IGetUserProfileUseCase
     {
         _loggedUser = loggedUser;
     }
-    
+
     public async Task<ResponseUserProfileJson> Execute()
     {
         var loggedUser = await _loggedUser.Get();

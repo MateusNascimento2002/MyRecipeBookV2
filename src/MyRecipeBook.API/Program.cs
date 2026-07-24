@@ -30,7 +30,7 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
         Description = "Enter only your access token. Swagger will add 'Bearer' automatically.",
@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-    
+
     options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
         {
@@ -90,26 +90,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
 
-        options.Events = new JwtBearerEvents()
+        options.Events = new JwtBearerEvents
         {
             OnTokenValidated = async context =>
             {
                 var subject = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
-                             context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+                              context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 if (Guid.TryParse(subject, out var userId) == false)
                 {
                     context.Fail("Invalid token subject!");
                     return;
                 }
-                
+
                 var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserReadOnlyRepository>();
 
                 var userExists = await userRepository.ExistActiveUserWithId(userId);
-                if (userExists == false)
-                {
-                    context.Fail("User not found or inactive!");
-                }
+                if (userExists == false) context.Fail("User not found or inactive!");
             },
             OnChallenge = async context =>
             {
@@ -118,12 +115,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 context.Response.ContentType = "application/json";
 
                 var response = context.AuthenticateFailure switch
-                {   
+                {
                     null => new ResponseErrorJson(ResourceMessagesException.VALIDATION_ACCESS_TOKEN_REQUIRED),
                     SecurityTokenExpiredException => new ResponseErrorJson("Token Expired!", true),
                     _ => new ResponseErrorJson(ResourceMessagesException.VALIDATION_RESOURCE_ACCESS_TOKEN)
                 };
-                
+
                 await context.Response.WriteAsJsonAsync(response);
             }
         };

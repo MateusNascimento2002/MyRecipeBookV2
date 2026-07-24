@@ -14,12 +14,12 @@ namespace MyRecipeBook.Application.UseCases.User.Register;
 
 public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
 {
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;
     private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
-    private readonly IAccessTokenGenerator _accessTokenGenerator;
-    
+
     public RegisterUserAccountUseCase(
         IPasswordHasher passwordHasher,
         IUserWriteOnlyRepository userWriteOnlyRepository,
