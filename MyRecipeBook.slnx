@@ -1,7 +1,7 @@
 <Solution>
     <Folder Name="/Solutions Items/">
-        <File Path="Directory.Build.Props" />
-        <File Path="Directory.Packages.Props" />
+        <File Path="Directory.Build.props" />
+        <File Path="Directory.Packages.props" />
     </Folder>
     <Folder Name="/src/">
         <Project Path="src/MyRecipeBook.API/MyRecipeBook.API.csproj" />
