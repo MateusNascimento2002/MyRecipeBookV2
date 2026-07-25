@@ -156,4 +156,46 @@
     <data name="VALIDATION_PASSWORD_MIN_LENGTH" xml:space="preserve">
         <value>Oops! Password should have at least 8 characters.</value>
     </data>
+    <data name="VALIDATION_RECIPE_TITLE_REQUIRED" xml:space="preserve">
+        <value>Oops! Title is required.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_TITLE_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Title should have a maximum of 256 characters.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_DESCRIPTION_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Description should have a maximum of 512 characters.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_COOK_TIME_INVALID" xml:space="preserve">
+        <value>Oops! Cook time is invalid.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_DISH_TYPE_INVALID" xml:space="preserve">
+        <value>Oops! Dish type is invalid.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INGREDIENTS_REQUIRED" xml:space="preserve">
+        <value>Oops! The recipe should have at least one ingredient.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INGREDIENT_REQUIRED" xml:space="preserve">
+        <value>Oops! Ingredient is required.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INGREDIENT_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Ingredient should have a maximum of 256 characters.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INSTRUCTIONS_REQUIRED" xml:space="preserve">
+        <value>Oops! The recipe should have at least one instruction.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INSTRUCTION_REQUIRED" xml:space="preserve">
+        <value>Oops! Instruction is required.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INSTRUCTION_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Instruction should have a maximum of 256 characters.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INSTRUCTION_ORDER_INVALID" xml:space="preserve">
+        <value>Oops! Instruction order should be greater than or equal to zero.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_INSTRUCTION_ORDER_DUPLICATED" xml:space="preserve">
+        <value>Oops! There are two or more instructions with the same order.</value>
+    </data>
+    <data name="VALIDATION_RECIPE_DISH_TYPE_REQUIRED" xml:space="preserve">
+        <value>Oops! Dish type is required.</value>
+    </data>
 </root>
