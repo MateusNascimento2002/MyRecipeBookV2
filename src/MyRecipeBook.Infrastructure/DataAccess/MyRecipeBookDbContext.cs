@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using MyRecipeBook.Domain.Entities;
 
 namespace MyRecipeBook.Infrastructure.DataAccess;
@@ -11,4 +12,9 @@ internal class MyRecipeBookDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }
