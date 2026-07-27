@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyRecipeBook.Domain.Entities;
+using DomainRecipe = MyRecipeBook.Domain.Entities.Recipe;
+namespace MyRecipeBook.Infrastructure.Configurations.Recipe;
 
-namespace MyRecipeBook.Infrastructure.Configurations;
-
-public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
+public class RecipeConfiguration : IEntityTypeConfiguration<DomainRecipe>
 {
-    public void Configure(EntityTypeBuilder<Recipe> builder)
+    public void Configure(EntityTypeBuilder<DomainRecipe> builder)
     {
         builder.ToTable("Recipes");
         

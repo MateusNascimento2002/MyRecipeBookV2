@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyRecipeBook.Domain.Entities;
 
-namespace MyRecipeBook.Infrastructure.Configurations;
+namespace MyRecipeBook.Infrastructure.Configurations.User;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<Domain.Entities.User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<Domain.Entities.User> builder)
     {
         builder.ToTable("Users");
         
