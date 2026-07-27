@@ -70,7 +70,7 @@
         <value>Oops! O ingrediente é obrigatório.</value>
     </data>
     <data name="VALIDATION_RECIPE_INGREDIENT_MAX_LENGTH" xml:space="preserve">
-        <value>Oops! O ingrediente deve ter no máximo 256 caracteres.</value>
+        <value>Oops! O ingrediente deve ter no máximo 512 caracteres.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTIONS_REQUIRED" xml:space="preserve">
         <value>Oops! A receita deve ter pelo menos uma instrução.</value>
@@ -79,7 +79,7 @@
         <value>Oops! A instrução é obrigatória.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTION_MAX_LENGTH" xml:space="preserve">
-        <value>Oops! A instrução deve ter no máximo 256 caracteres.</value>
+        <value>Oops! A instrução deve ter no máximo 512 caracteres.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTION_ORDER_INVALID" xml:space="preserve">
         <value>Oops! A ordem da instrução deve ser maior ou igual a zero.</value>
@@ -89,5 +89,11 @@
     </data>
     <data name="VALIDATION_RECIPE_DISH_TYPE_REQUIRED" xml:space="preserve">
         <value>Oops! O tipo de prato é obrigatório.</value>
+    </data>
+    <data name="VALIDATION_NAME_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! O Nome deve ter no máximo 256 caracteres.</value>
+    </data>
+    <data name="VALIDATION_EMAIL_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! O Email deve ter no máximo 256 caracteres.</value>
     </data>
 </root>

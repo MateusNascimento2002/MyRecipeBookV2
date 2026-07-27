@@ -105,6 +105,15 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! Email should have a maximum of 256 characters..
+        /// </summary>
+        public static string VALIDATION_EMAIL_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("VALIDATION_EMAIL_MAX_LENGTH", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Oops! Email is required..
         /// </summary>
         public static string VALIDATION_EMAIL_REQUIRED {
@@ -122,6 +131,15 @@ namespace MyRecipeBook.Exception {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Name should have a maximum of 256 characters..
+        /// </summary>
+        public static string VALIDATION_NAME_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("VALIDATION_NAME_MAX_LENGTH", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Oops! Name is required..
         /// </summary>
@@ -186,7 +204,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Ingredient should have a maximum of 256 characters..
+        ///   Looks up a localized string similar to Oops! Ingredient should have a maximum of 512 characters..
         /// </summary>
         public static string VALIDATION_RECIPE_INGREDIENT_MAX_LENGTH {
             get {
@@ -213,7 +231,7 @@ namespace MyRecipeBook.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Instruction should have a maximum of 256 characters..
+        ///   Looks up a localized string similar to Oops! Instruction should have a maximum of 512 characters..
         /// </summary>
         public static string VALIDATION_RECIPE_INSTRUCTION_MAX_LENGTH {
             get {

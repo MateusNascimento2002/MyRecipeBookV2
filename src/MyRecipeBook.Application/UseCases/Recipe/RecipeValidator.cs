@@ -40,7 +40,7 @@ public class RecipeValidator : AbstractValidator<RequestRecipeJson>
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithMessage(ResourceMessagesException.VALIDATION_RECIPE_INGREDIENT_REQUIRED)
-            .MaximumLength(256)
+            .MaximumLength(512)
             .WithMessage(ResourceMessagesException.VALIDATION_RECIPE_INGREDIENT_MAX_LENGTH);
 
         RuleFor(x => x.Instructions)
@@ -60,7 +60,7 @@ public class RecipeValidator : AbstractValidator<RequestRecipeJson>
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .WithMessage(ResourceMessagesException.VALIDATION_RECIPE_INSTRUCTION_REQUIRED)
-                .MaximumLength(256)
+                .MaximumLength(512)
                 .WithMessage(ResourceMessagesException.VALIDATION_RECIPE_INSTRUCTION_MAX_LENGTH);
         });
     }

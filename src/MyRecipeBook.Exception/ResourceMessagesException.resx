@@ -178,7 +178,7 @@
         <value>Oops! Ingredient is required.</value>
     </data>
     <data name="VALIDATION_RECIPE_INGREDIENT_MAX_LENGTH" xml:space="preserve">
-        <value>Oops! Ingredient should have a maximum of 256 characters.</value>
+        <value>Oops! Ingredient should have a maximum of 512 characters.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTIONS_REQUIRED" xml:space="preserve">
         <value>Oops! The recipe should have at least one instruction.</value>
@@ -187,7 +187,7 @@
         <value>Oops! Instruction is required.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTION_MAX_LENGTH" xml:space="preserve">
-        <value>Oops! Instruction should have a maximum of 256 characters.</value>
+        <value>Oops! Instruction should have a maximum of 512 characters.</value>
     </data>
     <data name="VALIDATION_RECIPE_INSTRUCTION_ORDER_INVALID" xml:space="preserve">
         <value>Oops! Instruction order should be greater than or equal to zero.</value>
@@ -197,5 +197,11 @@
     </data>
     <data name="VALIDATION_RECIPE_DISH_TYPE_REQUIRED" xml:space="preserve">
         <value>Oops! Dish type is required.</value>
+    </data>
+    <data name="VALIDATION_NAME_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Name should have a maximum of 256 characters.</value>
+    </data>
+    <data name="VALIDATION_EMAIL_MAX_LENGTH" xml:space="preserve">
+        <value>Oops! Email should have a maximum of 256 characters.</value>
     </data>
 </root>
