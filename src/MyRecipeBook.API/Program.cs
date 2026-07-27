@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
@@ -26,6 +27,11 @@ builder.Services.AddControllers()
             .JsonSerializerOptions
             .Converters
             .Add(new StringConverter());
+        
+        options
+            .JsonSerializerOptions
+            .Converters
+            .Add(new JsonStringEnumConverter());
     });
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>
