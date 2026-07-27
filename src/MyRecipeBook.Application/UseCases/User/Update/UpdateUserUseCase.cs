@@ -2,7 +2,7 @@
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Domain.Identity;
 using MyRecipeBook.Domain.Interfaces.Repositories.UnitOfWork;
-using MyRecipeBook.Domain.Interfaces.Repositories.Users;
+using MyRecipeBook.Domain.Interfaces.Repositories.User;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Exception.ExceptionBase;
 using DomainUser = MyRecipeBook.Domain.Entities.User;

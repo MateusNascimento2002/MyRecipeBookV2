@@ -3,7 +3,7 @@ using Mapster;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Interfaces.Repositories.UnitOfWork;
-using MyRecipeBook.Domain.Interfaces.Repositories.Users;
+using MyRecipeBook.Domain.Interfaces.Repositories.User;
 using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exception;

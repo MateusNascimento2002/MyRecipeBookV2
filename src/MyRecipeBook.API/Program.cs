@@ -11,7 +11,7 @@ using MyRecipeBook.API.Filters;
 using MyRecipeBook.API.Token;
 using MyRecipeBook.Application.Extensions;
 using MyRecipeBook.Communication.Responses;
-using MyRecipeBook.Domain.Interfaces.Repositories.Users;
+using MyRecipeBook.Domain.Interfaces.Repositories.User;
 using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exception;
 using MyRecipeBook.Infrastructure.Extensions;
