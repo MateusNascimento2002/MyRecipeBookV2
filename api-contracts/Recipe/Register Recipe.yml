@@ -1,0 +1,103 @@
+info:
+  name: Register Recipe
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{apiUrl}}/recipes"
+  headers:
+    - name: accept
+      value: text/plain
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"title\": \"Macarrão à Bolonhesa\",\r
+
+      \  \"cookTime\": 45,\r
+
+      \  \"description\": \"Um clássico prato italiano com molho de carne moída, tomate e ervas, servido sobre macarrão al dente.\",\r
+
+      \  \"ingredients\": [\r
+
+      \    \"500g de macarrão espaguete\",\r
+
+      \    \"400g de carne moída\",\r
+
+      \    \"1 cebola picada\",\r
+
+      \    \"2 dentes de alho picados\",\r
+
+      \    \"400g de molho de tomate\",\r
+
+      \    \"2 colheres de sopa de azeite\",\r
+
+      \    \"Sal e pimenta a gosto\",\r
+
+      \    \"Queijo parmesão ralado\"\r
+
+      \  ],\r
+
+      \  \"instructions\": [\r
+
+      \    {\r
+
+      \      \"order\": 1,\r
+
+      \      \"description\": \"Refogue a cebola e o alho no azeite até dourar.\"\r
+
+      \    },\r
+
+      \    {\r
+
+      \      \"order\": 2,\r
+
+      \      \"description\": \"Adicione a carne moída e cozinhe até dourar por completo.\"\r
+
+      \    },\r
+
+      \    {\r
+
+      \      \"order\": 3,\r
+
+      \      \"description\": \"Acrescente o molho de tomate, sal e pimenta, e deixe cozinhar em fogo baixo por 20 minutos.\"\r
+
+      \    },\r
+
+      \    {\r
+
+      \      \"order\": 4,\r
+
+      \      \"description\": \"Cozinhe o macarrão em água fervente com sal até ficar al dente.\"\r
+
+      \    },\r
+
+      \    {\r
+
+      \      \"order\": 5,\r
+
+      \      \"description\": \"Escorra o macarrão e misture com o molho. Sirva com queijo parmesão por cima.\"\r
+
+      \    }\r
+
+      \  ],\r
+
+      \  \"dishTypes\": [\r
+
+      \    1,\r
+
+      \    3\r
+
+      \  ]\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
