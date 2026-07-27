@@ -201,7 +201,7 @@ public class RecipeValidatorTests
     {
         // Arrange
         var request = RequestRecipeJsonBuilder.Build();
-        request.Ingredients = [new string('a', 257)];
+        request.Ingredients = [new string('a', 513)];
 
         var validator = new RecipeValidator();
 
@@ -312,7 +312,7 @@ public class RecipeValidatorTests
     {
         // Arrange
         var request = RequestRecipeJsonBuilder.Build();
-        request.Instructions = [new RequestInstructionJson { Order = 1, Description = new string('a', 257) }];
+        request.Instructions = [new RequestInstructionJson { Order = 1, Description = new string('a', 513) }];
 
         var validator = new RecipeValidator();
 

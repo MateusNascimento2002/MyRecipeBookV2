@@ -66,6 +66,52 @@ public class UpdateUserValidatorTests
     }
 
     [Fact]
+    public void Validate_ShouldHaveError_WhenNameIsTooLong()
+    {
+        // Arrange
+        var request = RequestUpdateUserJsonBuilder.Build();
+        request.Name = new string('a', 257);
+
+        var validator = new UpdateUserValidator();
+
+        // Act
+        var result = validator.Validate(request);
+
+        // Assert
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldSatisfyAllConditions(errors =>
+        {
+            errors.ShouldHaveSingleItem();
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_NAME_MAX_LENGTH));
+            errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Name)));
+        });
+    }
+
+    [Fact]
+    public void Validate_ShouldHaveError_WhenEmailIsTooLong()
+    {
+        // Arrange
+        var request = RequestUpdateUserJsonBuilder.Build();
+        request.Email = $"{new string('a', 250)}@test.com";
+
+        var validator = new UpdateUserValidator();
+
+        // Act
+        var result = validator.Validate(request);
+
+        // Assert
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldSatisfyAllConditions(errors =>
+        {
+            errors.ShouldHaveSingleItem();
+            errors.ShouldContain(error =>
+                error.ErrorMessage.Equals(ResourceMessagesException.VALIDATION_EMAIL_MAX_LENGTH));
+            errors.ShouldContain(error => error.PropertyName.Equals(nameof(request.Email)));
+        });
+    }
+
+    [Fact]
     public void Validate_ShouldHaveError_WhenEmailIsInvalid()
     {
         // Arrange
