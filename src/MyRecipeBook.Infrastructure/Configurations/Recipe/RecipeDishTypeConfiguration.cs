@@ -9,5 +9,6 @@ public class RecipeDishTypeConfiguration : IEntityTypeConfiguration<RecipeDishTy
     public void Configure(EntityTypeBuilder<RecipeDishType> builder)
     {
         builder.ToTable("RecipeDishTypes");
+        builder.Property(r => r.Type).HasConversion<string>();
     }
 }
