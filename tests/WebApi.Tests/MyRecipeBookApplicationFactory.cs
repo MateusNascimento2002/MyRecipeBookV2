@@ -46,17 +46,19 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         var accessTokenGenerator = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
 
         var (user, password) = UserBuilder.Build();
+        var recipe = RecipeBuilder.Build(user);
 
         user.Password = passwordHasher.HashPassword(password);
 
         await dbContext.Users.AddAsync(user);
+        await dbContext.Recipes.AddAsync(recipe);
         await dbContext.SaveChangesAsync();
 
         var user1AccessTokenGenerator = accessTokenGenerator.Generate(user);
 
         TOKEN_USER_NOT_FOUND_IN_DATABASE = accessTokenGenerator.Generate(new MyRecipeBook.Domain.Entities.User());
 
-        User1 = new UserIdentityManager(user, password, user1AccessTokenGenerator);
+        User1 = new UserIdentityManager(user, recipe, password, user1AccessTokenGenerator);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
