@@ -2,5 +2,5 @@
 
 public interface IRecipeReadOnlyRepository
 {
-    
+    Task<Entities.Recipe?> GetById(Guid id, Guid userId);
 }
