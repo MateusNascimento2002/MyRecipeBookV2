@@ -112,7 +112,7 @@ namespace MyRecipeBook.Exception {
                 return ResourceManager.GetString("VALIDATION_EMAIL_MAX_LENGTH", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Oops! Email is required..
         /// </summary>
@@ -139,7 +139,7 @@ namespace MyRecipeBook.Exception {
                 return ResourceManager.GetString("VALIDATION_NAME_MAX_LENGTH", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Oops! Name is required..
         /// </summary>
@@ -272,6 +272,15 @@ namespace MyRecipeBook.Exception {
         public static string VALIDATION_RECIPE_INSTRUCTIONS_REQUIRED {
             get {
                 return ResourceManager.GetString("VALIDATION_RECIPE_INSTRUCTIONS_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! We couldn&apos;t found this recipe.
+        /// </summary>
+        public static string VALIDATION_RECIPE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("VALIDATION_RECIPE_NOT_FOUND", resourceCulture);
             }
         }
         

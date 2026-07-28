@@ -96,4 +96,7 @@
     <data name="VALIDATION_EMAIL_MAX_LENGTH" xml:space="preserve">
         <value>Oops! O Email deve ter no máximo 256 caracteres.</value>
     </data>
+    <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
+        <value>Oops! Não encontramos essa receita.</value>
+    </data>
 </root>

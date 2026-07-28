@@ -204,4 +204,7 @@
     <data name="VALIDATION_EMAIL_MAX_LENGTH" xml:space="preserve">
         <value>Oops! Email should have a maximum of 256 characters.</value>
     </data>
+    <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
+        <value>Oops! We couldn't found this recipe</value>
+    </data>
 </root>
