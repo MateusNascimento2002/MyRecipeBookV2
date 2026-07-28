@@ -1,7 +1,7 @@
 using Moq;
 using MyRecipeBook.Domain.Interfaces.Repositories.Recipe;
 
-namespace CommonTestUtilities.Repositories;
+namespace CommonTestUtilities.Repositories.Recipe;
 
 public class IRecipeWriteOnlyRepositoryBuilder
 {

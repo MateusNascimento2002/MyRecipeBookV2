@@ -2,6 +2,7 @@ using System.Net;
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.Identity;
 using CommonTestUtilities.Repositories;
+using CommonTestUtilities.Repositories.Recipe;
 using CommonTestUtilities.Requests;
 using MyRecipeBook.Application.Mappings;
 using MyRecipeBook.Application.UseCases.Recipe.Register;

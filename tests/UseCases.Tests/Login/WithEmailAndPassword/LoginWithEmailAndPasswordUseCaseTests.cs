@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.Repositories;
+using CommonTestUtilities.Repositories.User;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;

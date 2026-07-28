@@ -1,5 +1,7 @@
 ﻿using CommonTestUtilities.Repositories;
+using CommonTestUtilities.Repositories.User;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
