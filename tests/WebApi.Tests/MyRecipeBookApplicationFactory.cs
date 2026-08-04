@@ -23,6 +23,7 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
     }
 
     public UserIdentityManager User1 { get; private set; } = null!;
+    public UserIdentityManager UserWithoutRecipes { get; private set; } = null!;
     public string TOKEN_USER_NOT_FOUND_IN_DATABASE { get; private set; } = string.Empty;
 
 
@@ -50,15 +51,23 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         user.Password = passwordHasher.HashPassword(password);
 
+        var (userWithoutRecipes, userWithoutRecipesPassword) = UserBuilder.Build();
+
+        userWithoutRecipes.Password = passwordHasher.HashPassword(userWithoutRecipesPassword);
+
         await dbContext.Users.AddAsync(user);
+        await dbContext.Users.AddAsync(userWithoutRecipes);
         await dbContext.Recipes.AddAsync(recipe);
         await dbContext.SaveChangesAsync();
 
-        var user1AccessTokenGenerator = accessTokenGenerator.Generate(user);
+        var user1AccessToken = accessTokenGenerator.Generate(user);
+        var userWithoutRecipesAccessToken = accessTokenGenerator.Generate(userWithoutRecipes);
 
         TOKEN_USER_NOT_FOUND_IN_DATABASE = accessTokenGenerator.Generate(new MyRecipeBook.Domain.Entities.User());
 
-        User1 = new UserIdentityManager(user, recipe, password, user1AccessTokenGenerator);
+        User1 = new UserIdentityManager(user, recipe, password, user1AccessToken);
+        UserWithoutRecipes = new UserIdentityManager(userWithoutRecipes, userWithoutRecipesPassword,
+            userWithoutRecipesAccessToken);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

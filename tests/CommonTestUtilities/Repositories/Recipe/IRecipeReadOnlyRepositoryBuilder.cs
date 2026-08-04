@@ -18,5 +18,12 @@ public class IRecipeReadOnlyRepositoryBuilder
         return this;
     }
 
+    public IRecipeReadOnlyRepositoryBuilder GetRecentRecipes(MyRecipeBook.Domain.Entities.User user,
+        IList<MyRecipeBook.Domain.Entities.Recipe> recipes)
+    {
+        _recipeReadOnlyRepositoryMock.Setup(repo => repo.GetRecentRecipes(user.Id)).ReturnsAsync(recipes);
+        return this;
+    }
+
     public IRecipeReadOnlyRepository Build() => _recipeReadOnlyRepositoryMock.Object;
 }

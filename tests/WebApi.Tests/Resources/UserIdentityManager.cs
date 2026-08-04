@@ -18,6 +18,11 @@ public class UserIdentityManager
         _recipe = recipe;
     }
 
+    public UserIdentityManager(DomainUser user, string password, string accessToken)
+        : this(user, null!, password, accessToken)
+    {
+    }
+
     public Guid GetId()
     {
         return _user.Id;
