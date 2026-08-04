@@ -3,4 +3,5 @@
 public interface IRecipeReadOnlyRepository
 {
     Task<Entities.Recipe?> GetById(Guid id, Guid userId);
+    Task<IList<Entities.Recipe>> GetRecentRecipes(Guid userId);
 }
