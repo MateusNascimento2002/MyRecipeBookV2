@@ -10,5 +10,6 @@ public class RecipeDishTypeConfiguration : IEntityTypeConfiguration<RecipeDishTy
     {
         builder.ToTable("RecipeDishTypes");
         builder.Property(r => r.Type).HasConversion<string>();
+        builder.Property(r => r.Id).ValueGeneratedNever();
     }
 }

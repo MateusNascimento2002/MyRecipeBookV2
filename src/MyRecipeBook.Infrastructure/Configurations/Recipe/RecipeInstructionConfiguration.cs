@@ -10,5 +10,6 @@ public class RecipeInstructionConfiguration : IEntityTypeConfiguration<RecipeIns
     {
         builder.ToTable("RecipeInstructions");
         builder.Property(r => r.Description).HasMaxLength(512);
+        builder.Property(r => r.Id).ValueGeneratedNever();
     }
 }
