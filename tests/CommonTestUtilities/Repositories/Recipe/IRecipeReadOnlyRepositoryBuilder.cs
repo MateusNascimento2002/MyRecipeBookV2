@@ -29,5 +29,20 @@ public class IRecipeReadOnlyRepositoryBuilder
         return this;
     }
 
+    public IRecipeReadOnlyRepositoryBuilder FilterRecipes(MyRecipeBook.Domain.Entities.User user,
+        RecipeFilterDto expectedFilter, IList<MyRecipeBook.Domain.Entities.Recipe> recipes)
+    {
+        var summaryRecipes = recipes.Select(r => new RecipeSummaryDto(r.Id, r.Title)).ToList();
+
+        _recipeReadOnlyRepositoryMock
+            .Setup(repo => repo.FilterRecipes(user.Id, It.Is<RecipeFilterDto>(filter =>
+                filter.SearchTerm == expectedFilter.SearchTerm &&
+                filter.CookTime == expectedFilter.CookTime &&
+                filter.DishTypes.SequenceEqual(expectedFilter.DishTypes))))
+            .ReturnsAsync(summaryRecipes);
+
+        return this;
+    }
+
     public IRecipeReadOnlyRepository Build() => _recipeReadOnlyRepositoryMock.Object;
 }
