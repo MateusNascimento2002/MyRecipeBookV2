@@ -1,0 +1,31 @@
+info:
+  name: Filter
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{apiUrl}}/recipes/filter"
+  headers:
+    - name: accept
+      value: text/plain
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "searchTerm": "Panqueca Americana com Mel",
+        "cookTime": "UpTo30Minutes",
+        "dishTypes": [
+          "BreakFast",
+          "Dinner"
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
