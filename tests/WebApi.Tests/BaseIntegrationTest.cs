@@ -57,6 +57,13 @@ public class BaseIntegrationTest : IClassFixture<MyRecipeBookApplicationFactory>
         AuthorizeRequest(accessToken);
         return await _httpClient.GetAsync(requestUri);
     }
+    
+    protected async Task<HttpResponseMessage> Delete(string requestUri, string accessToken, string culture = "en-US")
+    {
+        ChangeRequestCulture(culture);
+        AuthorizeRequest(accessToken);
+        return await _httpClient.DeleteAsync(requestUri);
+    }
 
     private void AuthorizeRequest(string accessToken)
     {

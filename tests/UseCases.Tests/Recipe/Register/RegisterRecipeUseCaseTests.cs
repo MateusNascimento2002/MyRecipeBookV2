@@ -55,7 +55,7 @@ public class RegisterRecipeUseCaseTests
     {
         MapsterConfiguration.Configure();
 
-        var recipeWriteOnlyRepository = IRecipeWriteOnlyRepositoryBuilder.Build();
+        var recipeWriteOnlyRepository = new IRecipeWriteOnlyRepositoryBuilder().Build();
         var unitOfWork = IUnitOfWorkBuilder.Build();
         var loggedUser = ILoggedUserBuilder.Build(user);
 
