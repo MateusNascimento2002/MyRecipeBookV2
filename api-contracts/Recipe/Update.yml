@@ -4,8 +4,8 @@ info:
   seq: 4
 
 http:
-  method: POST
-  url: "{{apiUrl}}/recipes"
+  method: PUT
+  url: "{{apiUrl}}/recipes/019fceb2-443c-7fe7-87ac-6f33afeef07d"
   headers:
     - name: accept
       value: text/plain
@@ -15,7 +15,7 @@ http:
     type: json
     data: |-
       {
-        "title": "Panqueca Americana com Mel 2",
+        "title": "Panqueca Americana com Mel 1",
         "cookTime": "UpTo30Minutes",
         "description": "Panquecas fofinhas e douradas, perfeitas para um café da manhã rápido e saboroso, servidas com mel e frutas frescas.",
         "ingredients": [
@@ -26,7 +26,8 @@ http:
           "2 ovos",
           "1 e 1/2 xícara de leite",
           "3 colheres de sopa de manteiga derretida",
-          "Mel a gosto para servir"
+          "Mel a gosto para servir",
+          "Uma colher de teste"
         ],
         "instructions": [
           {
@@ -48,10 +49,15 @@ http:
           {
             "order": 5,
             "description": "Cozinhe até formarem bolhas na superfície, vire e doure do outro lado. Sirva com mel."
+          },
+          {
+            "order": 6,
+            "description": "Um xablau de teste"
           }
         ],
         "dishTypes": [
-          "BreakFast"
+          "BreakFast",
+          "Dinner"
         ]
       }
   auth: inherit

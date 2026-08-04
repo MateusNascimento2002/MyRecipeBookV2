@@ -1,11 +1,11 @@
 info:
-  name: Delete By Id
+  name: Get Recents
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: DELETE
-  url: "{{apiUrl}}/recipes/019fa5d7-005e-7f97-a597-e380613a43d2"
+  method: GET
+  url: "{{apiUrl}}/recipes/recent"
   headers:
     - name: accept
       value: text/plain
