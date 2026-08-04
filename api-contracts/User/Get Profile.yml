@@ -1,5 +1,5 @@
 info:
-  name: Get User Profile
+  name: Get Profile
   type: http
   seq: 2
 

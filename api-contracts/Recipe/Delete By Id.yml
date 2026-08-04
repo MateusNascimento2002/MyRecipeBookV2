@@ -1,0 +1,20 @@
+info:
+  name: Delete By Id
+  type: http
+  seq: 3
+
+http:
+  method: DELETE
+  url: "{{apiUrl}}/recipes/019faa46-d784-7d20-b96d-8c8042beff1a"
+  headers:
+    - name: accept
+      value: text/plain
+    - name: Content-Type
+      value: application/json
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

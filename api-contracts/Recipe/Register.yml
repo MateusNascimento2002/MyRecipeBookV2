@@ -1,0 +1,63 @@
+info:
+  name: Register
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{apiUrl}}/recipes"
+  headers:
+    - name: accept
+      value: text/plain
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Panqueca Americana com Mel 2",
+        "cookTime": "UpTo30Minutes",
+        "description": "Panquecas fofinhas e douradas, perfeitas para um café da manhã rápido e saboroso, servidas com mel e frutas frescas.",
+        "ingredients": [
+          "2 xícaras de farinha de trigo",
+          "2 colheres de sopa de açúcar",
+          "1 colher de sopa de fermento em pó",
+          "1/2 colher de chá de sal",
+          "2 ovos",
+          "1 e 1/2 xícara de leite",
+          "3 colheres de sopa de manteiga derretida",
+          "Mel a gosto para servir"
+        ],
+        "instructions": [
+          {
+            "order": 1,
+            "description": "Misture os ingredientes secos (farinha, açúcar, fermento e sal) em uma tigela grande."
+          },
+          {
+            "order": 2,
+            "description": "Em outra tigela, bata os ovos, o leite e a manteiga derretida."
+          },
+          {
+            "order": 3,
+            "description": "Junte os ingredientes líquidos aos secos e misture até obter uma massa homogênea, sem excesso de mistura."
+          },
+          {
+            "order": 4,
+            "description": "Aqueça uma frigideira antiaderente em fogo médio e despeje porções da massa."
+          },
+          {
+            "order": 5,
+            "description": "Cozinhe até formarem bolhas na superfície, vire e doure do outro lado. Sirva com mel."
+          }
+        ],
+        "dishTypes": [
+          "BreakFast"
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

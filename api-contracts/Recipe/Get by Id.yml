@@ -1,5 +1,5 @@
 info:
-  name: Get Recipe by Id
+  name: Get by Id
   type: http
   seq: 2
 
