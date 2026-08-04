@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using MyRecipeBook.Domain.Dtos;
 using MyRecipeBook.Domain.Entities;
+using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Domain.Interfaces.Repositories.Recipe;
 
 namespace MyRecipeBook.Infrastructure.DataAccess.Repositories;
@@ -37,17 +39,51 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
             .FirstOrDefaultAsync(r => r.IsActive && r.Id == id && r.UserId == userId);
     }
 
-    public async Task<IList<Recipe>> GetRecentRecipes(Guid userId)
+    public async Task<IList<RecipeSummaryDto>> GetRecentRecipes(Guid userId)
     {
-        var recipes = await _context
+        return await _context
             .Recipes
             .AsNoTracking()
             .Where(r => r.IsActive && r.UserId == userId)
             .OrderByDescending(r => r.Id)
             .Take(6)
+            .Select(r => new RecipeSummaryDto(r.Id, r.Title))
             .ToListAsync();
-        
-        return recipes;
+    }
+
+    public async Task<IList<RecipeSummaryDto>> FilterRecipes(Guid userId, RecipeFilterDto filter)
+    {
+        var query = _context
+            .Recipes
+            .AsNoTracking()
+            .Where(r => r.IsActive && r.UserId == userId);
+
+        if (filter.CookTime is not null)
+            query = query.Where(r => r.CookTime == filter.CookTime.Value);
+
+        if (filter.SearchTerm.IsNotEmpty())
+        {
+            query = query.Where(r =>
+                r.Title.Contains(filter.SearchTerm) ||
+                r.Description.Contains(filter.SearchTerm) ||
+                r.Ingredients.Any(i => i.Item.Contains(filter.SearchTerm)));
+        }
+
+        if (filter.DishTypes.Any())
+        {
+           var recipesWithDishTypes = query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == filter.DishTypes[0]));
+           
+           foreach (var dishType in filter.DishTypes.Skip(1))
+           {
+               recipesWithDishTypes = recipesWithDishTypes.Union(query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == dishType)));
+           }
+
+           query = recipesWithDishTypes;
+        }
+
+        return await query
+            .Select(r => new RecipeSummaryDto(r.Id, r.Title))
+            .ToListAsync();
     }
 
     async Task<Recipe?> IRecipeUpdateOnlyRepository.GetById(Guid id, Guid userId)
