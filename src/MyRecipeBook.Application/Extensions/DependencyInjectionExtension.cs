@@ -3,6 +3,7 @@ using MyRecipeBook.Application.Mappings;
 using MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 using MyRecipeBook.Application.UseCases.Recipe.Delete;
 using MyRecipeBook.Application.UseCases.Recipe.GetById;
+using MyRecipeBook.Application.UseCases.Recipe.GetRecent;
 using MyRecipeBook.Application.UseCases.Recipe.Register;
 using MyRecipeBook.Application.UseCases.Recipe.Update;
 using MyRecipeBook.Application.UseCases.User.ChangePassword;
@@ -28,11 +29,14 @@ public static class DependencyInjectionExtension
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+            
             services.AddScoped<ILoginWithEmailAndPasswordUseCase, LoginWithEmailAndPasswordUseCase>();
+            
             services.AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
             services.AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>();
             services.AddScoped<IDeleteRecipeByIdUseCase, DeleteRecipeByIdUseCase>();
             services.AddScoped<IUpdateRecipeByIdUseCase, UpdateRecipeByIdUseCase>();
+            services.AddScoped<IGetRecentRecipesUseCase, GetRecentRecipesUseCase>();
         }
     }
 }
