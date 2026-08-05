@@ -5,6 +5,7 @@ using MyRecipeBook.Domain.Identity;
 using MyRecipeBook.Domain.Interfaces.Repositories.Recipe;
 using MyRecipeBook.Domain.Interfaces.Repositories.UnitOfWork;
 using MyRecipeBook.Domain.Interfaces.Repositories.User;
+using MyRecipeBook.Domain.Interfaces.Repositories.VerificationCode;
 using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Infrastructure.DataAccess;
@@ -43,6 +44,8 @@ public static class DependencyInjectionExtension
             services.AddScoped<IRecipeWriteOnlyRepository, RecipeRepository>();
             services.AddScoped<IRecipeReadOnlyRepository, RecipeRepository>();
             services.AddScoped<IRecipeUpdateOnlyRepository, RecipeRepository>();
+            
+            services.AddScoped<IVerificationCodeWriteOnlyRepository, VerificationCodeRepository>();
         }
 
         private void AddUnitOfWork()
