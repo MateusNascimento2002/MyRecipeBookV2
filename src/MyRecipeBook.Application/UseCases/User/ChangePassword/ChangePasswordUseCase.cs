@@ -26,12 +26,12 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
     public async Task Execute(RequestChangePasswordJson request)
     {
         var user = await _loggedUser.Get();
-        Validate(request, user);
+        ValidateAndThrowOnFailures(request, user);
         var hashedPassword = _passwordHasher.HashPassword(request.NewPassword);
         await _userUpdateOnlyRepository.UpdatePassword(user.Id, hashedPassword);
     }
 
-    private void Validate(RequestChangePasswordJson request, DomainUser user)
+    private void ValidateAndThrowOnFailures(RequestChangePasswordJson request, DomainUser user)
     {
         var result = new ChangePasswordValidator().Validate(request);
         var isPasswordValid = _passwordHasher.VerifyPassword(request.CurrentPassword, user.Password);

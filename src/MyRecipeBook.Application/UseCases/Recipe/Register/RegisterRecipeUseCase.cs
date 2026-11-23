@@ -25,7 +25,7 @@ public class RegisterRecipeUseCase : IRegisterRecipeUseCase
 
     public async Task<ResponseRegisteredRecipeJson> Execute(RequestRecipeJson request)
     {
-        Validate(request);
+        ValidateAndThrowOnFailures(request);
 
         var recipe = request.Adapt<DomainRecipe>();
 
@@ -38,7 +38,7 @@ public class RegisterRecipeUseCase : IRegisterRecipeUseCase
         return recipe.Adapt<ResponseRegisteredRecipeJson>();
     }
 
-    private void Validate(RequestRecipeJson request)
+    private void ValidateAndThrowOnFailures(RequestRecipeJson request)
     {
         var result = new RecipeValidator().Validate(request);
 

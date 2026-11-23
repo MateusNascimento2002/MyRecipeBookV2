@@ -28,14 +28,14 @@ public class UpdateUserUseCase : IUpdateUserUseCase
     public async Task Execute(RequestUpdateUserJson request)
     {
         var user = await _loggedUser.Get();
-        await Validate(request, user);
+        await ValidateAndThrowOnFailures(request, user);
         user.Email = request.Email;
         user.Name = request.Name;
         _userUpdateOnlyRepository.UpdateProfile(user);
         await _unitOfWork.CommitAsync();
     }
 
-    private async Task Validate(RequestUpdateUserJson request, DomainUser user)
+    private async Task ValidateAndThrowOnFailures(RequestUpdateUserJson request, DomainUser user)
     {
         var result = await new UpdateUserValidator().ValidateAsync(request);
 

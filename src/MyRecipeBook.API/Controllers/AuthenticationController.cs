@@ -11,7 +11,7 @@ namespace MyRecipeBook.API.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("login")]
     [ProducesResponseType(typeof(ResponseRegisterUserJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login(

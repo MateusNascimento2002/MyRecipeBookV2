@@ -39,7 +39,7 @@ public class RequestPasswordRecoveryCodeUseCase : IRequestPasswordRecoveryCodeUs
 
         // TODO: Send e-mail
 
-        await _verificationCodeWriteOnlyRepository.AddAsync(verificationCode);
+        await _verificationCodeWriteOnlyRepository.Replace(verificationCode);
 
         await _unitOfWork.CommitAsync();
     }

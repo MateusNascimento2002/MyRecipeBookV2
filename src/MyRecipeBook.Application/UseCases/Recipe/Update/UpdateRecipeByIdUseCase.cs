@@ -24,7 +24,7 @@ public class UpdateRecipeByIdUseCase : IUpdateRecipeByIdUseCase
 
     public async Task Execute(Guid id, RequestRecipeJson request)
     {
-        Validate(request);
+        ValidateAndThrowOnFailures(request);
         var recipe = await _recipeUpdateOnlyRepository.GetById(id, _loggedUser.GetUserId());
         if (recipe is null)
             throw new NotFoundException(ResourceMessagesException.VALIDATION_RECIPE_NOT_FOUND);
@@ -34,7 +34,7 @@ public class UpdateRecipeByIdUseCase : IUpdateRecipeByIdUseCase
         await _unitOfWork.CommitAsync();
     }
 
-    private void Validate(RequestRecipeJson request)
+    private void ValidateAndThrowOnFailures(RequestRecipeJson request)
     {
         var result = new RecipeValidator().Validate(request);
 

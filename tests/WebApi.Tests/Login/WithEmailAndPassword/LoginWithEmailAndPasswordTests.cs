@@ -13,7 +13,7 @@ namespace WebApi.Tests.Login.WithEmailAndPassword;
 
 public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
 {
-    private const string REQUEST_URI = "/authentication";
+    private const string REQUEST_URI = "/authentication/login";
     private readonly UserIdentityManager _user1;
 
     public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory) : base(factory)
