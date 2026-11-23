@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using MyRecipeBook.Communication.Enums.Recipe;
 using MyRecipeBook.Communication.Requests;
 using Shouldly;
 using WebApi.Tests.Resources;
@@ -9,9 +10,9 @@ namespace WebApi.Tests.Recipe.Filter;
 public class FilterRecipesTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes/filter";
+    private readonly string _tokenUserNotFoundInDatabase;
     private readonly UserIdentityManager _user1;
     private readonly UserIdentityManager _userWithoutRecipes;
-    private readonly string _tokenUserNotFoundInDatabase;
 
     public FilterRecipesTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
@@ -28,9 +29,9 @@ public class FilterRecipesTests : BaseIntegrationTest
         var request = new RequestFilterRecipesJson
         {
             SearchTerm = recipe.Title,
-            CookTime = (MyRecipeBook.Communication.Enums.Recipe.CookTime)recipe.CookTime,
+            CookTime = (CookTime)recipe.CookTime,
             DishTypes = recipe.DishTypes
-                .Select(dishType => (MyRecipeBook.Communication.Enums.Recipe.DishType)dishType.Type)
+                .Select(dishType => (DishType)dishType.Type)
                 .ToList()
         };
 
@@ -94,7 +95,7 @@ public class FilterRecipesTests : BaseIntegrationTest
     {
         var request = new RequestFilterRecipesJson();
 
-        var result = await Post(REQUEST_URI, request, accessToken: token);
+        var result = await Post(REQUEST_URI, request, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -104,7 +105,7 @@ public class FilterRecipesTests : BaseIntegrationTest
     {
         var request = new RequestFilterRecipesJson();
 
-        var result = await Post(REQUEST_URI, request, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Post(REQUEST_URI, request, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

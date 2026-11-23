@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <Folder Include="Interfaces\Repositories\Recipe\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Interfaces\Repositories\Recipe\"/>
+    </ItemGroup>
 </Project>

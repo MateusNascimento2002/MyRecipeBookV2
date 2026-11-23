@@ -18,5 +18,8 @@ public class IRecipeUpdateOnlyRepositoryBuilder
         return this;
     }
 
-    public IRecipeUpdateOnlyRepository Build() => _recipeUpdateOnlyRepositoryMock.Object;
+    public IRecipeUpdateOnlyRepository Build()
+    {
+        return _recipeUpdateOnlyRepositoryMock.Object;
+    }
 }

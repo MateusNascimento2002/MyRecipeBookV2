@@ -31,16 +31,16 @@ public static class DependencyInjectionExtension
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
-            
+
             services.AddScoped<ILoginWithEmailAndPasswordUseCase, LoginWithEmailAndPasswordUseCase>();
-            
+
             services.AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
             services.AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>();
             services.AddScoped<IDeleteRecipeByIdUseCase, DeleteRecipeByIdUseCase>();
             services.AddScoped<IUpdateRecipeByIdUseCase, UpdateRecipeByIdUseCase>();
             services.AddScoped<IGetRecentRecipesUseCase, GetRecentRecipesUseCase>();
             services.AddScoped<IFilterRecipesUseCase, FilterRecipesUseCase>();
-            
+
             services.AddScoped<IRequestPasswordRecoveryCodeUseCase, RequestPasswordRecoveryCodeUseCase>();
         }
     }

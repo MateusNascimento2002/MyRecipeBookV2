@@ -21,7 +21,7 @@ public class RequestPasswordRecoveryCodeTests : BaseIntegrationTest
     [Fact]
     public async Task Success_WhenUserExists()
     {
-        var request = new RequestPasswordRecoveryJson()
+        var request = new RequestPasswordRecoveryJson
         {
             Email = _user1.GetEmail()
         };
@@ -44,9 +44,9 @@ public class RequestPasswordRecoveryCodeTests : BaseIntegrationTest
     public async Task Success_WhenUserDoesNotExists()
     {
         var request = RequestPassowrdRecoveryJsonBuilder.Build();
-        
+
         var codesBefore = await DbContext.VerificationCodes.AsNoTracking().CountAsync();
-        
+
         var response = await Post(REQUEST_URI, request);
 
         response.StatusCode.ShouldBe(HttpStatusCode.Accepted);

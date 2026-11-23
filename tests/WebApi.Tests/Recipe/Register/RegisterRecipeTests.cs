@@ -14,9 +14,9 @@ namespace WebApi.Tests.Recipe.Register;
 public class RegisterRecipeTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
-    
+    private readonly UserIdentityManager _user1;
+
     public RegisterRecipeTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
         _user1 = factory.User1;
@@ -96,7 +96,7 @@ public class RegisterRecipeTests : BaseIntegrationTest
 
         recipeExists.ShouldBeFalse();
     }
-    
+
     [Theory]
     [InlineData("invalid")]
     [InlineData(" ")]
@@ -104,7 +104,7 @@ public class RegisterRecipeTests : BaseIntegrationTest
     {
         var request = RequestRecipeJsonBuilder.Build();
 
-        var result = await Post(REQUEST_URI, request, accessToken: token);
+        var result = await Post(REQUEST_URI, request, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -114,7 +114,7 @@ public class RegisterRecipeTests : BaseIntegrationTest
     {
         var request = RequestRecipeJsonBuilder.Build();
 
-        var result = await Post(REQUEST_URI, request, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Post(REQUEST_URI, request, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

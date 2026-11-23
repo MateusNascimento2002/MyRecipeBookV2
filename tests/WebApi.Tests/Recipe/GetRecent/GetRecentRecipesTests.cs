@@ -8,9 +8,9 @@ namespace WebApi.Tests.Recipe.GetRecent;
 public class GetRecentRecipesTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes/recent";
+    private readonly string _tokenUserNotFoundInDatabase;
     private readonly UserIdentityManager _user1;
     private readonly UserIdentityManager _userWithoutRecipes;
-    private readonly string _tokenUserNotFoundInDatabase;
 
     public GetRecentRecipesTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
@@ -24,7 +24,7 @@ public class GetRecentRecipesTests : BaseIntegrationTest
     {
         var recipe = _user1.GetRecipe();
 
-        var result = await Get(REQUEST_URI, accessToken: _user1.GetAccessToken());
+        var result = await Get(REQUEST_URI, _user1.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
@@ -46,7 +46,7 @@ public class GetRecentRecipesTests : BaseIntegrationTest
     [Fact]
     public async Task Success_ShouldReturnEmptyList_WhenUserHasNoRecipes()
     {
-        var result = await Get(REQUEST_URI, accessToken: _userWithoutRecipes.GetAccessToken());
+        var result = await Get(REQUEST_URI, _userWithoutRecipes.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
@@ -62,7 +62,7 @@ public class GetRecentRecipesTests : BaseIntegrationTest
     [InlineData(" ")]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenIsInvalid(string token)
     {
-        var result = await Get(REQUEST_URI, accessToken: token);
+        var result = await Get(REQUEST_URI, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -70,7 +70,7 @@ public class GetRecentRecipesTests : BaseIntegrationTest
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
-        var result = await Get(REQUEST_URI, accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Get(REQUEST_URI, _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

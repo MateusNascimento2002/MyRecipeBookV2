@@ -1,6 +1,5 @@
 ﻿using Mapster;
 using MyRecipeBook.Communication.Requests;
-using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Identity;
 using MyRecipeBook.Domain.Interfaces.Repositories.Recipe;
 using MyRecipeBook.Domain.Interfaces.Repositories.UnitOfWork;
@@ -11,17 +10,18 @@ namespace MyRecipeBook.Application.UseCases.Recipe.Update;
 
 public class UpdateRecipeByIdUseCase : IUpdateRecipeByIdUseCase
 {
-    private readonly IRecipeUpdateOnlyRepository  _recipeUpdateOnlyRepository;
-    private readonly IUnitOfWork  _unitOfWork;
-    private readonly ILoggedUser  _loggedUser;
+    private readonly ILoggedUser _loggedUser;
+    private readonly IRecipeUpdateOnlyRepository _recipeUpdateOnlyRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateRecipeByIdUseCase(IRecipeUpdateOnlyRepository recipeUpdateOnlyRepository, IUnitOfWork unitOfWork, ILoggedUser loggedUser)
+    public UpdateRecipeByIdUseCase(IRecipeUpdateOnlyRepository recipeUpdateOnlyRepository, IUnitOfWork unitOfWork,
+        ILoggedUser loggedUser)
     {
         _recipeUpdateOnlyRepository = recipeUpdateOnlyRepository;
         _unitOfWork = unitOfWork;
         _loggedUser = loggedUser;
     }
-    
+
     public async Task Execute(Guid id, RequestRecipeJson request)
     {
         Validate(request);
@@ -30,7 +30,7 @@ public class UpdateRecipeByIdUseCase : IUpdateRecipeByIdUseCase
             throw new NotFoundException(ResourceMessagesException.VALIDATION_RECIPE_NOT_FOUND);
 
         request.Adapt(recipe);
-        
+
         await _unitOfWork.CommitAsync();
     }
 
@@ -39,8 +39,6 @@ public class UpdateRecipeByIdUseCase : IUpdateRecipeByIdUseCase
         var result = new RecipeValidator().Validate(request);
 
         if (result.IsValid == false)
-        {
             throw new ErrorOnValidationException(result.Errors.Select(e => e.ErrorMessage).ToList());
-        }
     }
 }

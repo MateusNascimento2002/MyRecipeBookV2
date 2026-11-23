@@ -13,8 +13,8 @@ namespace WebApi.Tests.Recipe.Delete;
 public class DeleteRecipeByIdTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
+    private readonly UserIdentityManager _user1;
 
     public DeleteRecipeByIdTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
@@ -27,7 +27,7 @@ public class DeleteRecipeByIdTests : BaseIntegrationTest
     {
         var recipe = _user1.GetRecipe();
 
-        var result = await Delete($"{REQUEST_URI}/{recipe.Id}", accessToken: _user1.GetAccessToken());
+        var result = await Delete($"{REQUEST_URI}/{recipe.Id}", _user1.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.NoContent);
 
@@ -40,8 +40,8 @@ public class DeleteRecipeByIdTests : BaseIntegrationTest
     [ClassData(typeof(CultureInlineData))]
     public async Task Validate_ShouldBeAnErrorResponse_WhenRecipeDoesntExist(string culture)
     {
-        var result = await Delete($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: _user1.GetAccessToken(),
-            culture: culture);
+        var result = await Delete($"{REQUEST_URI}/{Guid.CreateVersion7()}", _user1.GetAccessToken(),
+            culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 
@@ -68,7 +68,7 @@ public class DeleteRecipeByIdTests : BaseIntegrationTest
     [InlineData(" ")]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenIsInvalid(string token)
     {
-        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: token);
+        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -76,7 +76,7 @@ public class DeleteRecipeByIdTests : BaseIntegrationTest
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
-        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

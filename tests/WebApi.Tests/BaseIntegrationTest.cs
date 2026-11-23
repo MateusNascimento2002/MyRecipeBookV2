@@ -8,9 +8,9 @@ namespace WebApi.Tests;
 
 public class BaseIntegrationTest : IClassFixture<MyRecipeBookApplicationFactory>, IDisposable
 {
+    internal readonly MyRecipeBookDbContext DbContext;
     private readonly HttpClient _httpClient;
     private readonly IServiceScope _scope;
-    internal readonly MyRecipeBookDbContext DbContext;
 
     public BaseIntegrationTest(MyRecipeBookApplicationFactory factory)
     {
@@ -57,7 +57,7 @@ public class BaseIntegrationTest : IClassFixture<MyRecipeBookApplicationFactory>
         AuthorizeRequest(accessToken);
         return await _httpClient.GetAsync(requestUri);
     }
-    
+
     protected async Task<HttpResponseMessage> Delete(string requestUri, string accessToken, string culture = "en-US")
     {
         ChangeRequestCulture(culture);

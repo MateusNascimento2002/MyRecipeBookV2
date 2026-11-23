@@ -13,15 +13,15 @@ public class RecipeBuilder
         return new Faker<Recipe>()
             .RuleFor(entity => entity.Title, f => f.Random.Word())
             .RuleFor(entity => entity.CookTime, f => f.PickRandom<CookTime>())
-            .RuleFor(entity => entity.Ingredients, f => f.Make(3, () => new RecipeIngredient()
+            .RuleFor(entity => entity.Ingredients, f => f.Make(3, () => new RecipeIngredient
             {
-                Item = f.Commerce.ProductName(),
+                Item = f.Commerce.ProductName()
             }))
-            .RuleFor(entity => entity.DishTypes, f => f.Make(2, () => new RecipeDishType()
+            .RuleFor(entity => entity.DishTypes, f => f.Make(2, () => new RecipeDishType
             {
                 Type = f.PickRandom<DishType>()
             }))
-            .RuleFor(entity => entity.Instructions, f => f.Make(3, () => new RecipeInstruction()
+            .RuleFor(entity => entity.Instructions, f => f.Make(3, () => new RecipeInstruction
             {
                 Order = instructionOrder++,
                 Description = f.Lorem.Sentence()

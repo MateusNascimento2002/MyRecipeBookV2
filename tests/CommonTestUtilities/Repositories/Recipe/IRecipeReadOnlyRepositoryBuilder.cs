@@ -23,9 +23,9 @@ public class IRecipeReadOnlyRepositoryBuilder
         IList<MyRecipeBook.Domain.Entities.Recipe> recipes)
     {
         var summaryRecipes = recipes.Select(r => new RecipeSummaryDto(r.Id, r.Title)).ToList();
-        
+
         _recipeReadOnlyRepositoryMock.Setup(repo => repo.GetRecentRecipes(user.Id)).ReturnsAsync(summaryRecipes);
-        
+
         return this;
     }
 
@@ -44,5 +44,8 @@ public class IRecipeReadOnlyRepositoryBuilder
         return this;
     }
 
-    public IRecipeReadOnlyRepository Build() => _recipeReadOnlyRepositoryMock.Object;
+    public IRecipeReadOnlyRepository Build()
+    {
+        return _recipeReadOnlyRepositoryMock.Object;
+    }
 }

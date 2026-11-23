@@ -17,21 +17,6 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
         _context = context;
     }
 
-    public async Task Add(Recipe recipe)
-    {
-        await _context.Recipes.AddAsync(recipe);
-    }
-
-    public async Task<bool> DeleteById(Guid id, Guid userId)
-    {
-        var deletedRows = await _context
-            .Recipes
-            .Where(r => r.IsActive && r.Id == id && r.UserId == userId)
-            .ExecuteDeleteAsync();
-
-        return deletedRows > 0;
-    }
-
     async Task<Recipe?> IRecipeReadOnlyRepository.GetById(Guid id, Guid userId)
     {
         return await GetFullRecipe()
@@ -62,23 +47,22 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
             query = query.Where(r => r.CookTime == filter.CookTime.Value);
 
         if (filter.SearchTerm.IsNotEmpty())
-        {
             query = query.Where(r =>
                 r.Title.Contains(filter.SearchTerm) ||
                 r.Description.Contains(filter.SearchTerm) ||
                 r.Ingredients.Any(i => i.Item.Contains(filter.SearchTerm)));
-        }
 
         if (filter.DishTypes.Any())
         {
-           var recipesWithDishTypes = query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == filter.DishTypes[0]));
-           
-           foreach (var dishType in filter.DishTypes.Skip(1))
-           {
-               recipesWithDishTypes = recipesWithDishTypes.Union(query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == dishType)));
-           }
+            var recipesWithDishTypes =
+                query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == filter.DishTypes[0]));
 
-           query = recipesWithDishTypes;
+            foreach (var dishType in filter.DishTypes.Skip(1))
+                recipesWithDishTypes =
+                    recipesWithDishTypes.Union(
+                        query.Where(recipe => recipe.DishTypes.Any(dish => dish.Type == dishType)));
+
+            query = recipesWithDishTypes;
         }
 
         return await query
@@ -90,6 +74,21 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
     {
         return await GetFullRecipe()
             .FirstOrDefaultAsync(r => r.IsActive && r.Id == id && r.UserId == userId);
+    }
+
+    public async Task Add(Recipe recipe)
+    {
+        await _context.Recipes.AddAsync(recipe);
+    }
+
+    public async Task<bool> DeleteById(Guid id, Guid userId)
+    {
+        var deletedRows = await _context
+            .Recipes
+            .Where(r => r.IsActive && r.Id == id && r.UserId == userId)
+            .ExecuteDeleteAsync();
+
+        return deletedRows > 0;
     }
 
     private IIncludableQueryable<Recipe, IOrderedEnumerable<RecipeInstruction>> GetFullRecipe()

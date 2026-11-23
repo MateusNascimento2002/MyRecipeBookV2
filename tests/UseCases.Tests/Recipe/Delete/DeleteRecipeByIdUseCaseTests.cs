@@ -17,9 +17,9 @@ public class DeleteRecipeByIdUseCaseTests
     {
         var (user, _) = UserBuilder.Build();
         var recipe = RecipeBuilder.Build(user);
-        
+
         var useCase = CreateUseCase(recipe, user);
-        
+
         await useCase.Execute(recipe.Id).ShouldNotThrowAsync();
     }
 
@@ -28,9 +28,9 @@ public class DeleteRecipeByIdUseCaseTests
     {
         var (user, _) = UserBuilder.Build();
         var recipe = RecipeBuilder.Build(user);
-        
+
         var useCase = CreateUseCase(recipe, user);
-        
+
         var exception = await useCase.Execute(Guid.CreateVersion7()).ShouldThrowAsync<NotFoundException>();
 
         exception.GetStatusCode().ShouldBe(HttpStatusCode.NotFound);
@@ -40,8 +40,9 @@ public class DeleteRecipeByIdUseCaseTests
             errorMessages.ShouldContain(ResourceMessagesException.VALIDATION_RECIPE_NOT_FOUND);
         });
     }
-    
-    private static DeleteRecipeByIdUseCase CreateUseCase(MyRecipeBook.Domain.Entities.Recipe recipe, MyRecipeBook.Domain.Entities.User user)
+
+    private static DeleteRecipeByIdUseCase CreateUseCase(MyRecipeBook.Domain.Entities.Recipe recipe,
+        MyRecipeBook.Domain.Entities.User user)
     {
         MapsterConfiguration.Configure();
         var loggedUser = ILoggedUserBuilder.Build(user);

@@ -22,14 +22,14 @@ internal static class MapsterConfiguration
         TypeAdapterConfig<RequestRecipeJson, DomainRecipe>
             .NewConfig()
             .Map(destination => destination.Ingredients, source => source.Ingredients.Select(ingredient =>
-                    new RecipeIngredient()
+                    new RecipeIngredient
                     {
                         Item = ingredient
                     }
                 )
             )
             .Map(destination => destination.DishTypes, source => source.DishTypes.Select(dishType =>
-                    new RecipeDishType()
+                    new RecipeDishType
                     {
                         Type = (DishType)dishType
                     }

@@ -2,5 +2,5 @@
 
 public interface IVerificationCodeWriteOnlyRepository
 {
-    Task AddAsync(Domain.Entities.VerificationCode code);
+    Task AddAsync(Entities.VerificationCode code);
 }

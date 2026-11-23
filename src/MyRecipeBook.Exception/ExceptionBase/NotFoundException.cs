@@ -2,7 +2,7 @@
 
 namespace MyRecipeBook.Exception.ExceptionBase;
 
-public class NotFoundException: MyRecipeBookBaseException
+public class NotFoundException : MyRecipeBookBaseException
 {
     private readonly string _message;
 
@@ -10,7 +10,7 @@ public class NotFoundException: MyRecipeBookBaseException
     {
         _message = message;
     }
-    
+
     public override List<string> GetErrorMessages()
     {
         return [_message];

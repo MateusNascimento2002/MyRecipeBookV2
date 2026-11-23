@@ -27,7 +27,7 @@ builder.Services.AddControllers()
             .JsonSerializerOptions
             .Converters
             .Add(new StringConverter());
-        
+
         options
             .JsonSerializerOptions
             .Converters

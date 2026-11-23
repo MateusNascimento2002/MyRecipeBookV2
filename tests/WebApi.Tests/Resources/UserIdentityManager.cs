@@ -7,8 +7,8 @@ public class UserIdentityManager
 {
     private readonly string _accessToken;
     private readonly string _password;
-    private readonly DomainUser _user;
     private readonly DomainRecipe _recipe;
+    private readonly DomainUser _user;
 
     public UserIdentityManager(DomainUser user, DomainRecipe recipe, string password, string accessToken)
     {
@@ -47,6 +47,9 @@ public class UserIdentityManager
     {
         return _accessToken;
     }
-    
-    public DomainRecipe GetRecipe() => _recipe;
+
+    public DomainRecipe GetRecipe()
+    {
+        return _recipe;
+    }
 }

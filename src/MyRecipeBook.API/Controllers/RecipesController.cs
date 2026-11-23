@@ -19,40 +19,42 @@ public class RecipesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredRecipeJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Register([FromServices] IRegisterRecipeUseCase  useCase, [FromBody] RequestRecipeJson request)
+    public async Task<IActionResult> Register([FromServices] IRegisterRecipeUseCase useCase,
+        [FromBody] RequestRecipeJson request)
     {
-        var result = await  useCase.Execute(request);
+        var result = await useCase.Execute(request);
         return Created(string.Empty, result);
     }
-    
+
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(ResponseRecipeJson), StatusCodes.Status200OK)]
-    [ProducesResponseType( typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromServices] IGetRecipeByIdUseCase useCase, [FromRoute] Guid id)
     {
         var result = await useCase.Execute(id);
         return Ok(result);
     }
-    
+
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType( typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteById([FromServices] IDeleteRecipeByIdUseCase useCase, [FromRoute] Guid id)
     {
         await useCase.Execute(id);
         return NoContent();
     }
-    
+
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType( typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-    [ProducesResponseType( typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromServices] IUpdateRecipeByIdUseCase useCase, [FromBody] RequestRecipeJson request, [FromRoute] Guid id)
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update([FromServices] IUpdateRecipeByIdUseCase useCase,
+        [FromBody] RequestRecipeJson request, [FromRoute] Guid id)
     {
         await useCase.Execute(id, request);
         return NoContent();
     }
-    
+
     [HttpGet("recent")]
     [ProducesResponseType(typeof(ResponseRecipesJson), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetRecent([FromServices] IGetRecentRecipesUseCase useCase)
@@ -60,10 +62,11 @@ public class RecipesController : ControllerBase
         var result = await useCase.Execute();
         return Ok(result);
     }
-    
+
     [HttpPost("filter")]
     [ProducesResponseType(typeof(ResponseRecipesJson), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Filter([FromServices] IFilterRecipesUseCase useCase, [FromBody] RequestFilterRecipesJson? request)
+    public async Task<IActionResult> Filter([FromServices] IFilterRecipesUseCase useCase,
+        [FromBody] RequestFilterRecipesJson? request)
     {
         var result = await useCase.Execute(request);
         return Ok(result);

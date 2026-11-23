@@ -1,5 +1,4 @@
-﻿using MyRecipeBook.Domain.Enums;
-using MyRecipeBook.Domain.Enums.VerificationCode;
+﻿using MyRecipeBook.Domain.Enums.VerificationCode;
 
 namespace MyRecipeBook.Domain.Entities;
 

@@ -14,8 +14,8 @@ namespace WebApi.Tests.Recipe.Update;
 public class UpdateRecipeByIdTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
+    private readonly UserIdentityManager _user1;
 
     public UpdateRecipeByIdTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
@@ -128,7 +128,7 @@ public class UpdateRecipeByIdTests : BaseIntegrationTest
     {
         var request = RequestRecipeJsonBuilder.Build();
 
-        var result = await Put($"{REQUEST_URI}/{Guid.CreateVersion7()}", request, accessToken: token);
+        var result = await Put($"{REQUEST_URI}/{Guid.CreateVersion7()}", request, token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -139,7 +139,7 @@ public class UpdateRecipeByIdTests : BaseIntegrationTest
         var request = RequestRecipeJsonBuilder.Build();
 
         var result = await Put($"{REQUEST_URI}/{Guid.CreateVersion7()}", request,
-            accessToken: _tokenUserNotFoundInDatabase);
+            _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

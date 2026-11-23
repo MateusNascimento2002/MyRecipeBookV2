@@ -15,7 +15,7 @@ public class DeleteRecipeByIdUseCase : IDeleteRecipeByIdUseCase
         _recipeWriteOnlyRepository = recipeWriteOnlyRepository;
         _loggedUser = loggedUser;
     }
-    
+
     public async Task Execute(Guid id)
     {
         var deleted = await _recipeWriteOnlyRepository.DeleteById(id, _loggedUser.GetUserId());

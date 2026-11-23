@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MyRecipeBook.Infrastructure.Configurations.VerificationCode;
 
-public class VerificationCodeConfiguration: IEntityTypeConfiguration<Domain.Entities.VerificationCode>
+public class VerificationCodeConfiguration : IEntityTypeConfiguration<Domain.Entities.VerificationCode>
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.VerificationCode> builder)
     {
@@ -18,6 +18,5 @@ public class VerificationCodeConfiguration: IEntityTypeConfiguration<Domain.Enti
             .WithMany()
             .HasForeignKey(v => v.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
     }
 }

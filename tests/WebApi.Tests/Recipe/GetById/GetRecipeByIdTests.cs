@@ -12,9 +12,9 @@ namespace WebApi.Tests.Recipe.GetById;
 public class GetRecipeByIdTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/recipes";
-    private readonly UserIdentityManager _user1;
     private readonly string _tokenUserNotFoundInDatabase;
-    
+    private readonly UserIdentityManager _user1;
+
     public GetRecipeByIdTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
         _user1 = factory.User1;
@@ -25,31 +25,31 @@ public class GetRecipeByIdTests : BaseIntegrationTest
     public async Task Success()
     {
         var recipe = _user1.GetRecipe();
-        
-        var result = await Get($"{REQUEST_URI}/{recipe.Id}", accessToken: _user1.GetAccessToken());
+
+        var result = await Get($"{REQUEST_URI}/{recipe.Id}", _user1.GetAccessToken());
 
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         await using var responseBody = await result.Content.ReadAsStreamAsync();
 
         var responseData = await JsonDocument.ParseAsync(responseBody);
-        
+
         responseData.RootElement.GetProperty("id").GetGuid().ShouldBe(recipe.Id);
         responseData.RootElement.GetProperty("title").GetString().ShouldBe(recipe.Title);
     }
-    
+
     [Theory]
     [ClassData(typeof(CultureInlineData))]
     public async Task Validate_ShouldBeAnErrorResponse_WhenRecipeDoesntExist(string culture)
     {
-        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: _user1.GetAccessToken(), culture: culture);
+        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", _user1.GetAccessToken(), culture);
 
         result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 
         await using var responseBody = await result.Content.ReadAsStreamAsync();
 
         var responseData = await JsonDocument.ParseAsync(responseBody);
-        
+
         var errors = responseData.RootElement.GetProperty("errors").EnumerateArray();
 
         var expectedMessage = ResourceMessagesException.ResourceManager.GetString(
@@ -63,13 +63,13 @@ public class GetRecipeByIdTests : BaseIntegrationTest
                 error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedMessage));
         });
     }
-    
+
     [Theory]
     [InlineData("invalid")]
     [InlineData(" ")]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenIsInvalid(string token)
     {
-        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: token);
+        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", token);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
@@ -77,7 +77,7 @@ public class GetRecipeByIdTests : BaseIntegrationTest
     [Fact]
     public async Task Validate_ShouldBeAnErrorResponse_WhenTokenUserDontExist()
     {
-        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", accessToken: _tokenUserNotFoundInDatabase);
+        var result = await Get($"{REQUEST_URI}/{Guid.CreateVersion7()}", _tokenUserNotFoundInDatabase);
 
         result.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }

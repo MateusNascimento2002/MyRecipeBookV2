@@ -16,26 +16,26 @@ public class RequestPasswordRecoveryCodeUseCaseTests
     {
         var (user, _) = UserBuilder.Build();
 
-        var request = new RequestPasswordRecoveryJson()
+        var request = new RequestPasswordRecoveryJson
         {
-            Email = user.Email,
+            Email = user.Email
         };
-        
+
         var useCase = CreateUseCase(user);
 
         await useCase.Execute(request).ShouldNotThrowAsync();
     }
-    
+
     [Fact]
     public async Task Success_WhenUserDoesNotExists()
     {
         var request = RequestPassowrdRecoveryJsonBuilder.Build();
-        
+
         var useCase = CreateUseCase();
 
         await useCase.Execute(request).ShouldNotThrowAsync();
     }
-    
+
     private static RequestPasswordRecoveryCodeUseCase CreateUseCase(MyRecipeBook.Domain.Entities.User? user = null)
     {
         var unitOfWork = IUnitOfWorkBuilder.Build();
@@ -45,6 +45,7 @@ public class RequestPasswordRecoveryCodeUseCaseTests
         if (user is not null)
             userReadonlyRepository.GetUserByEmail(user);
 
-        return new RequestPasswordRecoveryCodeUseCase(userReadonlyRepository.Build(), verificationCodeWriteOnlyRepository, unitOfWork);
+        return new RequestPasswordRecoveryCodeUseCase(userReadonlyRepository.Build(),
+            verificationCodeWriteOnlyRepository, unitOfWork);
     }
 }

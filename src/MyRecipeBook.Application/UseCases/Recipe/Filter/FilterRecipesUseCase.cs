@@ -10,8 +10,8 @@ namespace MyRecipeBook.Application.UseCases.Recipe.Filter;
 
 public class FilterRecipesUseCase : IFilterRecipesUseCase
 {
-    private readonly IRecipeReadOnlyRepository _recipeReadOnlyRepository;
     private readonly ILoggedUser _loggedUser;
+    private readonly IRecipeReadOnlyRepository _recipeReadOnlyRepository;
 
     public FilterRecipesUseCase(IRecipeReadOnlyRepository recipeReadOnlyRepository, ILoggedUser loggedUser)
     {
@@ -31,7 +31,7 @@ public class FilterRecipesUseCase : IFilterRecipesUseCase
             };
 
         var recipes = await _recipeReadOnlyRepository.FilterRecipes(_loggedUser.GetUserId(), recipeFilterDto);
-        var response = new ResponseRecipesJson()
+        var response = new ResponseRecipesJson
         {
             Recipes = recipes.Adapt<IList<ResponseRecipeSummaryJson>>()
         };
