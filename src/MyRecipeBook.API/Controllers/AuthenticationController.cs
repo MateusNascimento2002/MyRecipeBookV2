@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 using MyRecipeBook.Application.UseCases.PasswordRecovery;
+using MyRecipeBook.Application.UseCases.PasswordReset;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 
@@ -31,5 +32,16 @@ public class AuthenticationController : ControllerBase
         await useCase.Execute(request);
 
         return Accepted();
+    }
+    [HttpPost("password-recovery/reset")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> ResetPassword(
+        [FromServices] IResetPasswordUseCase useCase,
+        [FromBody] RequestResetPasswordJson request)
+    {
+        await useCase.Execute(request);
+
+        return NoContent();
     }
 }

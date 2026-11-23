@@ -207,4 +207,7 @@
     <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
         <value>Oops! We couldn't found this recipe</value>
     </data>
+    <data name="VERIFICATION_CODE_INVALID" xml:space="preserve">
+        <value>Oops! This code is invalid!</value>
+    </data>
 </root>

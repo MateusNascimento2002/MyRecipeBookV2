@@ -99,4 +99,7 @@
     <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
         <value>Oops! Não encontramos essa receita.</value>
     </data>
+    <data name="VERIFICATION_CODE_INVALID" xml:space="preserve">
+        <value>Oops! Esse código é inválido.</value>
+    </data>
 </root>
